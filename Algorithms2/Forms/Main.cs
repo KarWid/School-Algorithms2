@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Threading.Tasks;
 using Algorithms2.Algorithms;
 using Algorithms2.Interfaces;
+using Algorithms2.Enums;
 
 namespace Algorithms2.Forms
 {
@@ -13,12 +14,7 @@ namespace Algorithms2.Forms
         {
             InitializeComponent();
 
-            VisibleChessControls(false);
-        }
-
-        private void ChessJumperProblemBtn_Click(object sender, EventArgs e)
-        {
-            VisibleChessControls(true);
+            VisibleChessControls(false, AlgorithmType.None);
         }
 
         private async Task StartAlgorithm(IAlgorithm algorithm)
@@ -39,20 +35,39 @@ namespace Algorithms2.Forms
             ChessJumperProblemBtn.Enabled = enable;
         }
 
-        private void VisibleChessControls(bool visible)
+        private void VisibleChessControls(bool visible, AlgorithmType algorithmType)
         {
-            ChessBoardSizeLbl.Visible = visible;
-            ChessStartFieldColumnLbl.Visible = visible;
-            ChessStartFieldRowLbl.Visible = visible;
-            StartFieldLbl.Visible = visible;
-
-            ChessBoardSizeTb.Visible = visible;
-            ChessStartFieldColumnTb.Visible = visible;
-            ChessStartFieldRowTb.Visible = visible;
-
-            StartChessJumperProblemBtn.Visible = visible;
+            switch (algorithmType)
+            {
+                case AlgorithmType.ChessJumperProblem:
+                    VisibleChessJumperButtons(visible);
+                    break;
+                case AlgorithmType.NQueenWithReturnsProblem:
+                    VisibleNQueenWithReturnsButtons(visible);
+                    break;
+                case AlgorithmType.None:
+                    VisibleAllButtons(visible);
+                    break;
+                default:
+                    break;
+            }
         }
 
+        // buttons click
+        // choose problem
+        private void NQueenProblemWithReturnsBtn_Click(object sender, EventArgs e)
+        {
+            VisibleChessControls(false, AlgorithmType.None);
+            VisibleChessControls(true, AlgorithmType.NQueenWithReturnsProblem);
+        }
+
+        private void ChessJumperProblemBtn_Click(object sender, EventArgs e)
+        {
+            VisibleChessControls(false, AlgorithmType.None);
+            VisibleChessControls(true, AlgorithmType.ChessJumperProblem);
+        }
+
+        // start algorithm
         private async void StartChessJumperProblemBtn_Click(object sender, EventArgs e)
         {
             var errorMessage = String.Empty;
@@ -63,11 +78,13 @@ namespace Algorithms2.Forms
             {
                 errorMessage += "Niepoprawna wartosc wielkosci tablicy\n";
             }
+
             if (!Int32.TryParse(ChessStartFieldColumnTb.Text, out startFieldColumn) 
                 || startFieldColumn < 1 || startFieldColumn > chessBoardSize)
             {
                 errorMessage += "Niepoprawna wartosc kolumny poczatkowego pola\n";
             }
+
             if (!Int32.TryParse(ChessStartFieldRowTb.Text, out startFieldRow) 
                 || startFieldRow < 1 || startFieldRow > chessBoardSize)
             {
@@ -76,13 +93,74 @@ namespace Algorithms2.Forms
 
             if (String.IsNullOrEmpty(errorMessage))
             {
-                VisibleChessControls(false);
+                VisibleChessControls(false, AlgorithmType.ChessJumperProblem);
                 await StartAlgorithm(new ChessJumperProblem(chessBoardSize, new Point(startFieldRow, startFieldColumn)));
             }
             else
             {
                 MessageBox.Show(errorMessage);
             }
+        }
+
+        private async void NQueenStartProblemBtn_Click(object sender, EventArgs e)
+        {
+            var errorMessage = String.Empty;
+
+            int chessBoardSize;
+
+            if (!Int32.TryParse(ChessBoardSizeLbl.Text, out chessBoardSize) || chessBoardSize < 1)
+            {
+                errorMessage += "Niepoprawna wartosc wielkosci tablicy\n";
+            }
+
+            if (String.IsNullOrEmpty(errorMessage))
+            {
+                VisibleChessControls(false, AlgorithmType.NQueenWithReturnsProblem);
+                await StartAlgorithm(new NQueenWithReturnsProblem(chessBoardSize));
+            }
+            else
+            {
+                MessageBox.Show(errorMessage);
+            }
+        }
+
+        // show buttons
+        private void VisibleAllButtons(bool visible)
+        {
+            ChessBoardSizeLbl.Visible = visible;
+            ChessStartFieldColumnLbl.Visible = visible;
+            ChessStartFieldRowLbl.Visible = visible;
+            StartFieldLbl.Visible = visible;
+            ChessBoardSizeNQueenLbl.Visible = visible;
+
+            ChessBoardSizeTb.Visible = visible;
+            ChessStartFieldColumnTb.Visible = visible;
+            ChessStartFieldRowTb.Visible = visible;
+            ChessBoardSizeNQueenTb.Visible = visible;
+
+            StartChessJumperProblemBtn.Visible = visible;
+            NQueenStartProblemBtn.Visible = visible;
+        }
+
+        private void VisibleChessJumperButtons(bool visible)
+        {
+            StartChessJumperProblemBtn.Visible = visible;
+            ChessBoardSizeLbl.Visible = visible;
+            ChessStartFieldColumnLbl.Visible = visible;
+            ChessStartFieldRowLbl.Visible = visible;
+            StartFieldLbl.Visible = visible;
+
+            ChessBoardSizeTb.Visible = visible;
+            ChessStartFieldColumnTb.Visible = visible;
+            ChessStartFieldRowTb.Visible = visible;
+        }
+
+        private void VisibleNQueenWithReturnsButtons(bool visible)
+        {
+            ChessBoardSizeNQueenLbl.Visible = visible;
+            ChessBoardSizeNQueenTb.Visible = visible;
+
+            NQueenStartProblemBtn.Visible = visible;
         }
     }
 }

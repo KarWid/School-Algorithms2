@@ -37,6 +37,10 @@
             this.ChessStartFieldRowTb = new System.Windows.Forms.TextBox();
             this.ChessStartFieldColumnTb = new System.Windows.Forms.TextBox();
             this.StartChessJumperProblemBtn = new System.Windows.Forms.Button();
+            this.NQueenProblemWithReturnsBtn = new System.Windows.Forms.Button();
+            this.NQueenStartProblemBtn = new System.Windows.Forms.Button();
+            this.ChessBoardSizeNQueenTb = new System.Windows.Forms.TextBox();
+            this.ChessBoardSizeNQueenLbl = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // ChessJumperProblemBtn
@@ -110,17 +114,57 @@
             // 
             this.StartChessJumperProblemBtn.Location = new System.Drawing.Point(398, 12);
             this.StartChessJumperProblemBtn.Name = "StartChessJumperProblemBtn";
-            this.StartChessJumperProblemBtn.Size = new System.Drawing.Size(63, 20);
+            this.StartChessJumperProblemBtn.Size = new System.Drawing.Size(152, 20);
             this.StartChessJumperProblemBtn.TabIndex = 9;
-            this.StartChessJumperProblemBtn.Text = "Uruchom";
+            this.StartChessJumperProblemBtn.Text = "Uruchom skoczka";
             this.StartChessJumperProblemBtn.UseVisualStyleBackColor = true;
             this.StartChessJumperProblemBtn.Click += new System.EventHandler(this.StartChessJumperProblemBtn_Click);
+            // 
+            // NQueenProblemWithReturnsBtn
+            // 
+            this.NQueenProblemWithReturnsBtn.Location = new System.Drawing.Point(12, 110);
+            this.NQueenProblemWithReturnsBtn.Name = "NQueenProblemWithReturnsBtn";
+            this.NQueenProblemWithReturnsBtn.Size = new System.Drawing.Size(165, 41);
+            this.NQueenProblemWithReturnsBtn.TabIndex = 10;
+            this.NQueenProblemWithReturnsBtn.Text = "Problem N Hetmanow z powrotami";
+            this.NQueenProblemWithReturnsBtn.UseVisualStyleBackColor = true;
+            this.NQueenProblemWithReturnsBtn.Click += new System.EventHandler(this.NQueenProblemWithReturnsBtn_Click);
+            // 
+            // NQueenStartProblemBtn
+            // 
+            this.NQueenStartProblemBtn.Location = new System.Drawing.Point(398, 110);
+            this.NQueenStartProblemBtn.Name = "NQueenStartProblemBtn";
+            this.NQueenStartProblemBtn.Size = new System.Drawing.Size(152, 20);
+            this.NQueenStartProblemBtn.TabIndex = 11;
+            this.NQueenStartProblemBtn.Text = "Uruchom N Hetmanow";
+            this.NQueenStartProblemBtn.UseVisualStyleBackColor = true;
+            this.NQueenStartProblemBtn.Click += new System.EventHandler(this.NQueenStartProblemBtn_Click);
+            // 
+            // ChessBoardSizeNQueenTb
+            // 
+            this.ChessBoardSizeNQueenTb.Location = new System.Drawing.Point(342, 110);
+            this.ChessBoardSizeNQueenTb.Name = "ChessBoardSizeNQueenTb";
+            this.ChessBoardSizeNQueenTb.Size = new System.Drawing.Size(35, 20);
+            this.ChessBoardSizeNQueenTb.TabIndex = 13;
+            // 
+            // ChessBoardSizeNQueenLbl
+            // 
+            this.ChessBoardSizeNQueenLbl.AutoSize = true;
+            this.ChessBoardSizeNQueenLbl.Location = new System.Drawing.Point(231, 110);
+            this.ChessBoardSizeNQueenLbl.Name = "ChessBoardSizeNQueenLbl";
+            this.ChessBoardSizeNQueenLbl.Size = new System.Drawing.Size(78, 13);
+            this.ChessBoardSizeNQueenLbl.TabIndex = 12;
+            this.ChessBoardSizeNQueenLbl.Text = "Rozmiar tablicy";
             // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(934, 511);
+            this.Controls.Add(this.ChessBoardSizeNQueenTb);
+            this.Controls.Add(this.ChessBoardSizeNQueenLbl);
+            this.Controls.Add(this.NQueenStartProblemBtn);
+            this.Controls.Add(this.NQueenProblemWithReturnsBtn);
             this.Controls.Add(this.StartChessJumperProblemBtn);
             this.Controls.Add(this.ChessStartFieldColumnTb);
             this.Controls.Add(this.ChessStartFieldRowTb);
@@ -148,6 +192,10 @@
         private System.Windows.Forms.TextBox ChessStartFieldRowTb;
         private System.Windows.Forms.TextBox ChessStartFieldColumnTb;
         private System.Windows.Forms.Button StartChessJumperProblemBtn;
+        private System.Windows.Forms.Button NQueenProblemWithReturnsBtn;
+        private System.Windows.Forms.Button NQueenStartProblemBtn;
+        private System.Windows.Forms.TextBox ChessBoardSizeNQueenTb;
+        private System.Windows.Forms.Label ChessBoardSizeNQueenLbl;
     }
 }
 

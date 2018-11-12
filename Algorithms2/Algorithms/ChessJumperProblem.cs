@@ -74,6 +74,7 @@ namespace Algorithms2.Algorithms
             form.Show();
         }
 
+        // private methods
         private void NextJumps(int[,] chessBoard, Point actualPosition, int actualJumpNumber)
         {
             Jump(chessBoard, actualPosition, ref actualJumpNumber);

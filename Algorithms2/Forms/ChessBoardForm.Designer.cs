@@ -13,6 +13,8 @@ namespace Algorithms2.Forms
         /// </summary>
         private System.ComponentModel.IContainer components = null;
 
+        private const string _hetman = "X";
+
         private Label[,] _chessBoardLabel;
         private const int _tileSize = 40;
         private Color _blackClr = Color.DarkGray;
@@ -59,6 +61,52 @@ namespace Algorithms2.Forms
                     else
                     {
                         panel.BackColor = column % 2 != 0 ? _whiteClr : _blackClr;
+                    }
+                }
+            }
+        }
+
+        public ChessBoardForm(int[] positionInColumns, int chessBoardSize, TimeSpan algorithmTime)
+        {
+            if (positionInColumns == null)
+            {
+                throw new Exception("Position in columns are null");
+            }
+
+            _chessBoardLabel = new Label[chessBoardSize, chessBoardSize];
+
+            var size = chessBoardSize * _tileSize * 2;
+
+            this.Size = new Size(size, size);
+
+            for (int row=0; row < chessBoardSize; row++)
+            {
+                for (int column=0; column < chessBoardSize; column++)
+                {
+                    var panel = new Label
+                    {
+                        Location = new Point(_tileSize * row, _tileSize * column),
+                        Width = _tileSize,
+                        Height = _tileSize,
+                        TextAlign = ContentAlignment.MiddleCenter
+                    };
+
+                    Controls.Add(panel);
+
+                    _chessBoardLabel[row, column] = panel;
+
+                    if (row % 2 == 0)
+                    {
+                        panel.BackColor = column % 2 != 0 ? _blackClr : _whiteClr;
+                    }
+                    else
+                    {
+                        panel.BackColor = column % 2 != 0 ? _whiteClr : _blackClr;
+                    }
+
+                    if (positionInColumns[column] == row)
+                    {
+                        panel.Text = _hetman;
                     }
                 }
             }
