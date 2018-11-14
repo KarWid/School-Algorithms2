@@ -10,6 +10,8 @@ namespace Algorithms2.Forms
 {
     public partial class Main : Form
     {
+        private AlgorithmType _lastAlgorithm;
+
         public Main()
         {
             InitializeComponent();
@@ -37,6 +39,8 @@ namespace Algorithms2.Forms
 
         private void VisibleChessControls(bool visible, AlgorithmType algorithmType)
         {
+            VisibleAllButtons(false);
+
             switch (algorithmType)
             {
                 case AlgorithmType.ChessJumperProblem:
@@ -57,13 +61,19 @@ namespace Algorithms2.Forms
         // choose problem
         private void NQueenProblemWithReturnsBtn_Click(object sender, EventArgs e)
         {
-            VisibleChessControls(false, AlgorithmType.None);
+            _lastAlgorithm = AlgorithmType.NQueenWithReturnsProblem;
             VisibleChessControls(true, AlgorithmType.NQueenWithReturnsProblem);
         }
 
         private void ChessJumperProblemBtn_Click(object sender, EventArgs e)
         {
-            VisibleChessControls(false, AlgorithmType.None);
+            _lastAlgorithm = AlgorithmType.ChessJumperProblem;
+            VisibleChessControls(true, AlgorithmType.ChessJumperProblem);
+        }
+
+        private void WandsdorffProblemBtn_Click(object sender, EventArgs e)
+        {
+            _lastAlgorithm = AlgorithmType.WarnsdorfProblem;
             VisibleChessControls(true, AlgorithmType.ChessJumperProblem);
         }
 
@@ -74,19 +84,19 @@ namespace Algorithms2.Forms
 
             int chessBoardSize, startFieldRow, startFieldColumn;
 
-            if (!Int32.TryParse(ChessBoardSizeTb.Text, out chessBoardSize) || chessBoardSize < 1)
+            if (!Int32.TryParse(ChessBoardSizeTb.Text, out chessBoardSize) || chessBoardSize < 5)
             {
                 errorMessage += "Niepoprawna wartosc wielkosci tablicy\n";
             }
 
             if (!Int32.TryParse(ChessStartFieldColumnTb.Text, out startFieldColumn) 
-                || startFieldColumn < 1 || startFieldColumn > chessBoardSize)
+                || startFieldColumn < 0 || startFieldColumn > chessBoardSize)
             {
                 errorMessage += "Niepoprawna wartosc kolumny poczatkowego pola\n";
             }
 
             if (!Int32.TryParse(ChessStartFieldRowTb.Text, out startFieldRow) 
-                || startFieldRow < 1 || startFieldRow > chessBoardSize)
+                || startFieldRow < 0 || startFieldRow > chessBoardSize)
             {
                 errorMessage += "Niepoprawna wartosc wiersza poczatkowego pola\n";
             }
@@ -94,7 +104,18 @@ namespace Algorithms2.Forms
             if (String.IsNullOrEmpty(errorMessage))
             {
                 VisibleChessControls(false, AlgorithmType.ChessJumperProblem);
-                await StartAlgorithm(new ChessJumperProblem(chessBoardSize, new Point(startFieldRow, startFieldColumn)));
+
+                switch (_lastAlgorithm)
+                {
+                    case AlgorithmType.WarnsdorfProblem:
+                        await StartAlgorithm(new WarnsdorfProblem(chessBoardSize, new Point(startFieldRow, startFieldColumn)));
+                        break;
+                    case AlgorithmType.ChessJumperProblem:
+                        await StartAlgorithm(new ChessJumperProblem(chessBoardSize, new Point(startFieldRow, startFieldColumn)));
+                        break;
+                    default:
+                        break;
+                }
             }
             else
             {

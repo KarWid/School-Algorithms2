@@ -41,6 +41,7 @@
             this.NQueenStartProblemBtn = new System.Windows.Forms.Button();
             this.ChessBoardSizeNQueenTb = new System.Windows.Forms.TextBox();
             this.ChessBoardSizeNQueenLbl = new System.Windows.Forms.Label();
+            this.WandsdorffProblemBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ChessJumperProblemBtn
@@ -56,7 +57,7 @@
             // ChessBoardSizeLbl
             // 
             this.ChessBoardSizeLbl.AutoSize = true;
-            this.ChessBoardSizeLbl.Location = new System.Drawing.Point(231, 12);
+            this.ChessBoardSizeLbl.Location = new System.Drawing.Point(189, 12);
             this.ChessBoardSizeLbl.Name = "ChessBoardSizeLbl";
             this.ChessBoardSizeLbl.Size = new System.Drawing.Size(78, 13);
             this.ChessBoardSizeLbl.TabIndex = 2;
@@ -65,7 +66,7 @@
             // ChessStartFieldRowLbl
             // 
             this.ChessStartFieldRowLbl.AutoSize = true;
-            this.ChessStartFieldRowLbl.Location = new System.Drawing.Point(231, 55);
+            this.ChessStartFieldRowLbl.Location = new System.Drawing.Point(189, 55);
             this.ChessStartFieldRowLbl.Name = "ChessStartFieldRowLbl";
             this.ChessStartFieldRowLbl.Size = new System.Drawing.Size(39, 13);
             this.ChessStartFieldRowLbl.TabIndex = 3;
@@ -74,7 +75,7 @@
             // ChessStartFieldColumnLbl
             // 
             this.ChessStartFieldColumnLbl.AutoSize = true;
-            this.ChessStartFieldColumnLbl.Location = new System.Drawing.Point(231, 81);
+            this.ChessStartFieldColumnLbl.Location = new System.Drawing.Point(189, 81);
             this.ChessStartFieldColumnLbl.Name = "ChessStartFieldColumnLbl";
             this.ChessStartFieldColumnLbl.Size = new System.Drawing.Size(48, 13);
             this.ChessStartFieldColumnLbl.TabIndex = 4;
@@ -83,7 +84,7 @@
             // StartFieldLbl
             // 
             this.StartFieldLbl.AutoSize = true;
-            this.StartFieldLbl.Location = new System.Drawing.Point(231, 40);
+            this.StartFieldLbl.Location = new System.Drawing.Point(189, 40);
             this.StartFieldLbl.Name = "StartFieldLbl";
             this.StartFieldLbl.Size = new System.Drawing.Size(105, 13);
             this.StartFieldLbl.TabIndex = 5;
@@ -91,28 +92,28 @@
             // 
             // ChessBoardSizeTb
             // 
-            this.ChessBoardSizeTb.Location = new System.Drawing.Point(342, 12);
+            this.ChessBoardSizeTb.Location = new System.Drawing.Point(300, 12);
             this.ChessBoardSizeTb.Name = "ChessBoardSizeTb";
             this.ChessBoardSizeTb.Size = new System.Drawing.Size(35, 20);
             this.ChessBoardSizeTb.TabIndex = 6;
             // 
             // ChessStartFieldRowTb
             // 
-            this.ChessStartFieldRowTb.Location = new System.Drawing.Point(342, 55);
+            this.ChessStartFieldRowTb.Location = new System.Drawing.Point(300, 55);
             this.ChessStartFieldRowTb.Name = "ChessStartFieldRowTb";
             this.ChessStartFieldRowTb.Size = new System.Drawing.Size(35, 20);
             this.ChessStartFieldRowTb.TabIndex = 7;
             // 
             // ChessStartFieldColumnTb
             // 
-            this.ChessStartFieldColumnTb.Location = new System.Drawing.Point(342, 81);
+            this.ChessStartFieldColumnTb.Location = new System.Drawing.Point(300, 81);
             this.ChessStartFieldColumnTb.Name = "ChessStartFieldColumnTb";
             this.ChessStartFieldColumnTb.Size = new System.Drawing.Size(35, 20);
             this.ChessStartFieldColumnTb.TabIndex = 8;
             // 
             // StartChessJumperProblemBtn
             // 
-            this.StartChessJumperProblemBtn.Location = new System.Drawing.Point(398, 12);
+            this.StartChessJumperProblemBtn.Location = new System.Drawing.Point(356, 12);
             this.StartChessJumperProblemBtn.Name = "StartChessJumperProblemBtn";
             this.StartChessJumperProblemBtn.Size = new System.Drawing.Size(152, 20);
             this.StartChessJumperProblemBtn.TabIndex = 9;
@@ -122,7 +123,7 @@
             // 
             // NQueenProblemWithReturnsBtn
             // 
-            this.NQueenProblemWithReturnsBtn.Location = new System.Drawing.Point(12, 110);
+            this.NQueenProblemWithReturnsBtn.Location = new System.Drawing.Point(12, 122);
             this.NQueenProblemWithReturnsBtn.Name = "NQueenProblemWithReturnsBtn";
             this.NQueenProblemWithReturnsBtn.Size = new System.Drawing.Size(165, 41);
             this.NQueenProblemWithReturnsBtn.TabIndex = 10;
@@ -132,7 +133,7 @@
             // 
             // NQueenStartProblemBtn
             // 
-            this.NQueenStartProblemBtn.Location = new System.Drawing.Point(398, 110);
+            this.NQueenStartProblemBtn.Location = new System.Drawing.Point(356, 122);
             this.NQueenStartProblemBtn.Name = "NQueenStartProblemBtn";
             this.NQueenStartProblemBtn.Size = new System.Drawing.Size(152, 20);
             this.NQueenStartProblemBtn.TabIndex = 11;
@@ -142,7 +143,7 @@
             // 
             // ChessBoardSizeNQueenTb
             // 
-            this.ChessBoardSizeNQueenTb.Location = new System.Drawing.Point(342, 110);
+            this.ChessBoardSizeNQueenTb.Location = new System.Drawing.Point(300, 122);
             this.ChessBoardSizeNQueenTb.Name = "ChessBoardSizeNQueenTb";
             this.ChessBoardSizeNQueenTb.Size = new System.Drawing.Size(35, 20);
             this.ChessBoardSizeNQueenTb.TabIndex = 13;
@@ -150,17 +151,28 @@
             // ChessBoardSizeNQueenLbl
             // 
             this.ChessBoardSizeNQueenLbl.AutoSize = true;
-            this.ChessBoardSizeNQueenLbl.Location = new System.Drawing.Point(231, 110);
+            this.ChessBoardSizeNQueenLbl.Location = new System.Drawing.Point(189, 122);
             this.ChessBoardSizeNQueenLbl.Name = "ChessBoardSizeNQueenLbl";
             this.ChessBoardSizeNQueenLbl.Size = new System.Drawing.Size(78, 13);
             this.ChessBoardSizeNQueenLbl.TabIndex = 12;
             this.ChessBoardSizeNQueenLbl.Text = "Rozmiar tablicy";
             // 
+            // WandsdorffProblemBtn
+            // 
+            this.WandsdorffProblemBtn.Location = new System.Drawing.Point(12, 60);
+            this.WandsdorffProblemBtn.Name = "WandsdorffProblemBtn";
+            this.WandsdorffProblemBtn.Size = new System.Drawing.Size(165, 41);
+            this.WandsdorffProblemBtn.TabIndex = 14;
+            this.WandsdorffProblemBtn.Text = "Reguła Warnsdorffa";
+            this.WandsdorffProblemBtn.UseVisualStyleBackColor = true;
+            this.WandsdorffProblemBtn.Click += new System.EventHandler(this.WandsdorffProblemBtn_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(934, 511);
+            this.ClientSize = new System.Drawing.Size(1064, 456);
+            this.Controls.Add(this.WandsdorffProblemBtn);
             this.Controls.Add(this.ChessBoardSizeNQueenTb);
             this.Controls.Add(this.ChessBoardSizeNQueenLbl);
             this.Controls.Add(this.NQueenStartProblemBtn);
@@ -196,6 +208,7 @@
         private System.Windows.Forms.Button NQueenStartProblemBtn;
         private System.Windows.Forms.TextBox ChessBoardSizeNQueenTb;
         private System.Windows.Forms.Label ChessBoardSizeNQueenLbl;
+        private System.Windows.Forms.Button WandsdorffProblemBtn;
     }
 }
 

@@ -4,6 +4,7 @@
     {
         None,
         ChessJumperProblem,
-        NQueenWithReturnsProblem
+        NQueenWithReturnsProblem,
+        WarnsdorfProblem
     }
 }
