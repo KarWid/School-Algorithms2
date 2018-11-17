@@ -96,15 +96,15 @@ namespace Algorithms2.Forms
             }
 
             if (!Int32.TryParse(ChessStartFieldColumnTb.Text, out startFieldColumn) 
-                || startFieldColumn < 0 || startFieldColumn > chessBoardSize)
+                || startFieldColumn < 0 || startFieldColumn >= chessBoardSize)
             {
-                errorMessage += "Niepoprawna wartosc kolumny poczatkowego pola\n";
+                errorMessage += $"Niepoprawna wartosc kolumny poczatkowego pola, wartość powinna być z przedziału [0-{chessBoardSize - 1}]\n";
             }
 
             if (!Int32.TryParse(ChessStartFieldRowTb.Text, out startFieldRow) 
-                || startFieldRow < 0 || startFieldRow > chessBoardSize)
+                || startFieldRow < 0 || startFieldRow >= chessBoardSize)
             {
-                errorMessage += "Niepoprawna wartosc wiersza poczatkowego pola\n";
+                errorMessage += $"Niepoprawna wartosc wiersza poczatkowego pola, wartość powinna być z przedziału [0-{chessBoardSize - 1}]\n";
             }
 
             if (String.IsNullOrEmpty(errorMessage))
