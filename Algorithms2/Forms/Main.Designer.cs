@@ -42,6 +42,7 @@
             this.ChessBoardSizeNQueenTb = new System.Windows.Forms.TextBox();
             this.ChessBoardSizeNQueenLbl = new System.Windows.Forms.Label();
             this.WandsdorffProblemBtn = new System.Windows.Forms.Button();
+            this.NQueenProblemPermutationsBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ChessJumperProblemBtn
@@ -167,11 +168,22 @@
             this.WandsdorffProblemBtn.UseVisualStyleBackColor = true;
             this.WandsdorffProblemBtn.Click += new System.EventHandler(this.WandsdorffProblemBtn_Click);
             // 
+            // NQueenProblemPermutationsBtn
+            // 
+            this.NQueenProblemPermutationsBtn.Location = new System.Drawing.Point(12, 169);
+            this.NQueenProblemPermutationsBtn.Name = "NQueenProblemPermutationsBtn";
+            this.NQueenProblemPermutationsBtn.Size = new System.Drawing.Size(165, 41);
+            this.NQueenProblemPermutationsBtn.TabIndex = 15;
+            this.NQueenProblemPermutationsBtn.Text = "Problem N Hetmanow z permutacjami";
+            this.NQueenProblemPermutationsBtn.UseVisualStyleBackColor = true;
+            this.NQueenProblemPermutationsBtn.Click += new System.EventHandler(this.NQueenProblemPermutationsBtn_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1064, 456);
+            this.Controls.Add(this.NQueenProblemPermutationsBtn);
             this.Controls.Add(this.WandsdorffProblemBtn);
             this.Controls.Add(this.ChessBoardSizeNQueenTb);
             this.Controls.Add(this.ChessBoardSizeNQueenLbl);
@@ -209,6 +221,7 @@
         private System.Windows.Forms.TextBox ChessBoardSizeNQueenTb;
         private System.Windows.Forms.Label ChessBoardSizeNQueenLbl;
         private System.Windows.Forms.Button WandsdorffProblemBtn;
+        private System.Windows.Forms.Button NQueenProblemPermutationsBtn;
     }
 }
 

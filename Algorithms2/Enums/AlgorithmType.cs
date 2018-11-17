@@ -5,6 +5,7 @@
         None,
         ChessJumperProblem,
         NQueenWithReturnsProblem,
-        WarnsdorfProblem
+        WarnsdorfProblem,
+        NQueenPermutationsProblem
     }
 }

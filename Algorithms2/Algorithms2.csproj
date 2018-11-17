@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="Algorithms\BaseClasses\ChessJumperBase.cs" />
     <Compile Include="Algorithms\ChessJumperProblem.cs" />
+    <Compile Include="Algorithms\NQueenPermutationsProblem.cs" />
     <Compile Include="Algorithms\NQueenWithReturnsProblem.cs" />
     <Compile Include="Algorithms\WarnsdorfProblem.cs" />
     <Compile Include="Enums\AlgorithmType.cs" />

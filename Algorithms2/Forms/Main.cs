@@ -77,6 +77,12 @@ namespace Algorithms2.Forms
             VisibleChessControls(true, AlgorithmType.ChessJumperProblem);
         }
 
+        private void NQueenProblemPermutationsBtn_Click(object sender, EventArgs e)
+        {
+            _lastAlgorithm = AlgorithmType.NQueenPermutationsProblem;
+            VisibleChessControls(true, AlgorithmType.NQueenWithReturnsProblem);
+        }
+
         // start algorithm
         private async void StartChessJumperProblemBtn_Click(object sender, EventArgs e)
         {
@@ -129,7 +135,7 @@ namespace Algorithms2.Forms
 
             int chessBoardSize;
 
-            if (!Int32.TryParse(ChessBoardSizeLbl.Text, out chessBoardSize) || chessBoardSize < 1)
+            if (!Int32.TryParse(ChessBoardSizeNQueenTb.Text, out chessBoardSize) || chessBoardSize < 1)
             {
                 errorMessage += "Niepoprawna wartosc wielkosci tablicy\n";
             }
@@ -137,7 +143,18 @@ namespace Algorithms2.Forms
             if (String.IsNullOrEmpty(errorMessage))
             {
                 VisibleChessControls(false, AlgorithmType.NQueenWithReturnsProblem);
-                await StartAlgorithm(new NQueenWithReturnsProblem(chessBoardSize));
+
+                switch (_lastAlgorithm)
+                {
+                    case AlgorithmType.NQueenWithReturnsProblem:
+                        await StartAlgorithm(new NQueenWithReturnsProblem(chessBoardSize));
+                        break;
+                    case AlgorithmType.NQueenPermutationsProblem:
+                        await StartAlgorithm(new NQueenPermutationsProblem(chessBoardSize));
+                        break;
+                    default:
+                        break;
+                }
             }
             else
             {

@@ -1,10 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
 using Algorithms2.Forms;
 using Algorithms2.Helpers;
 using Algorithms2.Interfaces;
@@ -26,15 +23,13 @@ namespace Algorithms2.Algorithms
 
         private Stopwatch _stopwatch;
 
-        public TimeSpan LastActionTime { get; private set; }
-        public List<int[,]> Results { get; private set; } = new List<int[,]>();
+        // public properties
+        public TimeSpan LastActionTime { get; protected set; }
+        public List<int[,]> Results { get; protected set; } = new List<int[,]>();
 
         public NQueenWithReturnsProblem(int chessBoardSize)
         {
             int diagonalCount = ((chessBoardSize * 2) - 1);
-
-            _chessBoardSize = chessBoardSize;
-            _chessBoard = new int[chessBoardSize, chessBoardSize];
 
             _chessBoardSize = chessBoardSize;
             _chessBoard = new int[chessBoardSize, chessBoardSize];
@@ -54,15 +49,15 @@ namespace Algorithms2.Algorithms
             _isNotHetmanOnToLeftDiagonal = new bool[diagonalCount];
             _isNotHetmanOnToRightDiagonal = new bool[diagonalCount];
 
-            for (int i=0; i < _chessBoardSize; i++)
+            for (int i = 0; i < _chessBoardSize; i++)
             {
                 _positionInColums[i] = _unvisitedField;
                 _isNotHetmanInRow[i] = true;
             }
 
-            for (int i=0; i < diagonalCount; i++)
+            for (int i = 0; i < diagonalCount; i++)
             {
-                 _isNotHetmanOnToLeftDiagonal[i] = _isNotHetmanOnToRightDiagonal[i] = true;
+                _isNotHetmanOnToLeftDiagonal[i] = _isNotHetmanOnToRightDiagonal[i] = true;
             }
         }
 
@@ -96,11 +91,10 @@ namespace Algorithms2.Algorithms
                 row++;
                 q = false;
 
-                if (!ChessBoardHelper.IsCheck(hetman, row, _positionInColums, _isNotHetmanInRow, _isNotHetmanOnToLeftDiagonal,
+                if (!ChessBoardHelper.IsCheck(hetman, row, _isNotHetmanInRow, _isNotHetmanOnToLeftDiagonal,
                                              _isNotHetmanOnToRightDiagonal, _chessBoardSize))
                 {
-                    _positionInColums[hetman] = row;
-                    SetHetman(hetman, row, false);
+                    SetHetman(hetman, row, true);
 
                     if (hetman < (_chessBoardSize - 1))
                     {
@@ -108,7 +102,7 @@ namespace Algorithms2.Algorithms
 
                         if (!q)
                         {
-                            SetHetman(hetman, row, true);
+                            SetHetman(hetman, row, false);
                         }
                     }
                     else
@@ -123,9 +117,10 @@ namespace Algorithms2.Algorithms
         {
             try
             {
-                _isNotHetmanInRow[row] = set;
-                _isNotHetmanOnToLeftDiagonal[hetman + row] = set;
-                _isNotHetmanOnToRightDiagonal[hetman - row + (_chessBoardSize - 1)] = set;
+                _positionInColums[hetman] = row;
+                _isNotHetmanInRow[row] = !set;
+                _isNotHetmanOnToLeftDiagonal[hetman + row] = !set;
+                _isNotHetmanOnToRightDiagonal[hetman - row + (_chessBoardSize - 1)] = !set;
             }
             catch (Exception ex)
             {
