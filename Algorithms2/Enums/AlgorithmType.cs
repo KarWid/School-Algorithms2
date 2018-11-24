@@ -6,6 +6,7 @@
         ChessJumperProblem,
         NQueenWithReturnsProblem,
         WarnsdorfProblem,
-        NQueenPermutationsProblem
+        NQueenPermutationsProblem,
+        HashFunction
     }
 }

@@ -49,6 +49,9 @@ namespace Algorithms2.Forms
                 case AlgorithmType.NQueenWithReturnsProblem:
                     VisibleNQueenWithReturnsButtons(visible);
                     break;
+                case AlgorithmType.HashFunction:
+                    VisibleHashFunctionButtons(visible);
+                    break;
                 case AlgorithmType.None:
                     VisibleAllButtons(visible);
                     break;
@@ -81,6 +84,12 @@ namespace Algorithms2.Forms
         {
             _lastAlgorithm = AlgorithmType.NQueenPermutationsProblem;
             VisibleChessControls(true, AlgorithmType.NQueenWithReturnsProblem);
+        }
+
+        private void HashFunctionBtn_Click(object sender, EventArgs e)
+        {
+            _lastAlgorithm = AlgorithmType.HashFunction;
+            VisibleChessControls(true, AlgorithmType.HashFunction);
         }
 
         // start algorithm
@@ -162,6 +171,27 @@ namespace Algorithms2.Forms
             }
         }
 
+        private async void HashFunctionStartBtn_Click(object sender, EventArgs e)
+        {
+            var errorMessage = String.Empty;
+
+            int tableSize;
+
+            if (!Int32.TryParse(TableSizeHashFunctionTb.Text, out tableSize) || tableSize < 1)
+            {
+                errorMessage += "Niepoprawna wartosc wielkosci tablicy\n";
+            }
+
+            if (string.IsNullOrEmpty(errorMessage))
+            {
+                await StartAlgorithm(new HashFunction(tableSize));
+            }
+            else
+            {
+                MessageBox.Show(errorMessage);
+            }
+        }
+
         // show buttons
         private void VisibleAllButtons(bool visible)
         {
@@ -178,6 +208,10 @@ namespace Algorithms2.Forms
 
             StartChessJumperProblemBtn.Visible = visible;
             NQueenStartProblemBtn.Visible = visible;
+
+            HashFunctionStartBtn.Visible = visible;
+            TableSizeHashFunctionLbl.Visible = visible;
+            TableSizeHashFunctionTb.Visible = visible;
         }
 
         private void VisibleChessJumperButtons(bool visible)
@@ -199,6 +233,13 @@ namespace Algorithms2.Forms
             ChessBoardSizeNQueenTb.Visible = visible;
 
             NQueenStartProblemBtn.Visible = visible;
+        }
+
+        private void VisibleHashFunctionButtons(bool visible)
+        {
+            HashFunctionStartBtn.Visible = visible;
+            TableSizeHashFunctionLbl.Visible = visible;
+            TableSizeHashFunctionTb.Visible = visible;
         }
     }
 }

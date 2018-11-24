@@ -51,6 +51,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChessJumperTest.cs" />
+    <Compile Include="HashFunctionTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ChessBoardHelperTest.cs" />
   </ItemGroup>

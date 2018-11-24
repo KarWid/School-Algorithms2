@@ -43,6 +43,10 @@
             this.ChessBoardSizeNQueenLbl = new System.Windows.Forms.Label();
             this.WandsdorffProblemBtn = new System.Windows.Forms.Button();
             this.NQueenProblemPermutationsBtn = new System.Windows.Forms.Button();
+            this.HashFunctionBtn = new System.Windows.Forms.Button();
+            this.TableSizeHashFunctionTb = new System.Windows.Forms.TextBox();
+            this.TableSizeHashFunctionLbl = new System.Windows.Forms.Label();
+            this.HashFunctionStartBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ChessJumperProblemBtn
@@ -178,11 +182,51 @@
             this.NQueenProblemPermutationsBtn.UseVisualStyleBackColor = true;
             this.NQueenProblemPermutationsBtn.Click += new System.EventHandler(this.NQueenProblemPermutationsBtn_Click);
             // 
+            // HashFunctionBtn
+            // 
+            this.HashFunctionBtn.Location = new System.Drawing.Point(12, 225);
+            this.HashFunctionBtn.Name = "HashFunctionBtn";
+            this.HashFunctionBtn.Size = new System.Drawing.Size(165, 41);
+            this.HashFunctionBtn.TabIndex = 16;
+            this.HashFunctionBtn.Text = "Funkcja hashująca";
+            this.HashFunctionBtn.UseVisualStyleBackColor = true;
+            this.HashFunctionBtn.Click += new System.EventHandler(this.HashFunctionBtn_Click);
+            // 
+            // TableSizeHashFunctionTb
+            // 
+            this.TableSizeHashFunctionTb.Location = new System.Drawing.Point(300, 225);
+            this.TableSizeHashFunctionTb.Name = "TableSizeHashFunctionTb";
+            this.TableSizeHashFunctionTb.Size = new System.Drawing.Size(35, 20);
+            this.TableSizeHashFunctionTb.TabIndex = 18;
+            // 
+            // TableSizeHashFunctionLbl
+            // 
+            this.TableSizeHashFunctionLbl.AutoSize = true;
+            this.TableSizeHashFunctionLbl.Location = new System.Drawing.Point(189, 225);
+            this.TableSizeHashFunctionLbl.Name = "TableSizeHashFunctionLbl";
+            this.TableSizeHashFunctionLbl.Size = new System.Drawing.Size(78, 13);
+            this.TableSizeHashFunctionLbl.TabIndex = 17;
+            this.TableSizeHashFunctionLbl.Text = "Rozmiar tablicy";
+            // 
+            // HashFunctionStartBtn
+            // 
+            this.HashFunctionStartBtn.Location = new System.Drawing.Point(356, 224);
+            this.HashFunctionStartBtn.Name = "HashFunctionStartBtn";
+            this.HashFunctionStartBtn.Size = new System.Drawing.Size(152, 20);
+            this.HashFunctionStartBtn.TabIndex = 19;
+            this.HashFunctionStartBtn.Text = "Uruchom N Hetmanow";
+            this.HashFunctionStartBtn.UseVisualStyleBackColor = true;
+            this.HashFunctionStartBtn.Click += new System.EventHandler(this.HashFunctionStartBtn_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1064, 456);
+            this.Controls.Add(this.HashFunctionStartBtn);
+            this.Controls.Add(this.TableSizeHashFunctionTb);
+            this.Controls.Add(this.TableSizeHashFunctionLbl);
+            this.Controls.Add(this.HashFunctionBtn);
             this.Controls.Add(this.NQueenProblemPermutationsBtn);
             this.Controls.Add(this.WandsdorffProblemBtn);
             this.Controls.Add(this.ChessBoardSizeNQueenTb);
@@ -222,6 +266,10 @@
         private System.Windows.Forms.Label ChessBoardSizeNQueenLbl;
         private System.Windows.Forms.Button WandsdorffProblemBtn;
         private System.Windows.Forms.Button NQueenProblemPermutationsBtn;
+        private System.Windows.Forms.Button HashFunctionBtn;
+        private System.Windows.Forms.TextBox TableSizeHashFunctionTb;
+        private System.Windows.Forms.Label TableSizeHashFunctionLbl;
+        private System.Windows.Forms.Button HashFunctionStartBtn;
     }
 }
 
