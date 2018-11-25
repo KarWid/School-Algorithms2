@@ -47,6 +47,8 @@
             this.TableSizeHashFunctionTb = new System.Windows.Forms.TextBox();
             this.TableSizeHashFunctionLbl = new System.Windows.Forms.Label();
             this.HashFunctionStartBtn = new System.Windows.Forms.Button();
+            this.HashFunctionRatioTb = new System.Windows.Forms.TextBox();
+            this.HashFunctionRatioLbl = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // ChessJumperProblemBtn
@@ -186,7 +188,7 @@
             // 
             this.HashFunctionBtn.Location = new System.Drawing.Point(12, 225);
             this.HashFunctionBtn.Name = "HashFunctionBtn";
-            this.HashFunctionBtn.Size = new System.Drawing.Size(165, 41);
+            this.HashFunctionBtn.Size = new System.Drawing.Size(165, 48);
             this.HashFunctionBtn.TabIndex = 16;
             this.HashFunctionBtn.Text = "Funkcja hashująca";
             this.HashFunctionBtn.UseVisualStyleBackColor = true;
@@ -218,11 +220,29 @@
             this.HashFunctionStartBtn.UseVisualStyleBackColor = true;
             this.HashFunctionStartBtn.Click += new System.EventHandler(this.HashFunctionStartBtn_Click);
             // 
+            // HashFunctionRatioTb
+            // 
+            this.HashFunctionRatioTb.Location = new System.Drawing.Point(300, 253);
+            this.HashFunctionRatioTb.Name = "HashFunctionRatioTb";
+            this.HashFunctionRatioTb.Size = new System.Drawing.Size(35, 20);
+            this.HashFunctionRatioTb.TabIndex = 21;
+            // 
+            // HashFunctionRatioLbl
+            // 
+            this.HashFunctionRatioLbl.AutoSize = true;
+            this.HashFunctionRatioLbl.Location = new System.Drawing.Point(189, 253);
+            this.HashFunctionRatioLbl.Name = "HashFunctionRatioLbl";
+            this.HashFunctionRatioLbl.Size = new System.Drawing.Size(75, 13);
+            this.HashFunctionRatioLbl.TabIndex = 20;
+            this.HashFunctionRatioLbl.Text = "Współczynnik";
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1064, 456);
+            this.Controls.Add(this.HashFunctionRatioTb);
+            this.Controls.Add(this.HashFunctionRatioLbl);
             this.Controls.Add(this.HashFunctionStartBtn);
             this.Controls.Add(this.TableSizeHashFunctionTb);
             this.Controls.Add(this.TableSizeHashFunctionLbl);
@@ -270,6 +290,8 @@
         private System.Windows.Forms.TextBox TableSizeHashFunctionTb;
         private System.Windows.Forms.Label TableSizeHashFunctionLbl;
         private System.Windows.Forms.Button HashFunctionStartBtn;
+        private System.Windows.Forms.TextBox HashFunctionRatioTb;
+        private System.Windows.Forms.Label HashFunctionRatioLbl;
     }
 }
 

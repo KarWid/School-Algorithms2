@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Text;
-using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Algorithms2.Algorithms;
 
@@ -18,7 +16,7 @@ namespace AlgorithmsTest
         {
             int testValue = 1;
 
-            var function = new HashFunction(5);
+            var function = new HashFunction(5, 0.05);
 
             var addingResult = function.Insert(testValue);
 
@@ -43,17 +41,27 @@ namespace AlgorithmsTest
         {
             var rand = new Random();
             var startTableSize = 4;
+            var alfa = 0.05;
 
-            var function = new HashFunction(startTableSize);
+            var function = new HashFunction(startTableSize, alfa);
 
             Assert.AreEqual(startTableSize, function.TableCount);
 
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 50; i++)
             {
-                function.Insert(rand.Next(0, 200));
+                function.Insert(i);
+                function.Insert(rand.Next(50, 200));
             }
 
             Assert.AreNotEqual(startTableSize, function.TableCount, "Wielkosc tablicy nie ulegla zmianie");
+            Assert.AreEqual(128, function.TableCount, "Wielkosc tablicy jest nieodpowiednia z oczekiwaną po dodawaniu elementów");
+
+            for (int i=0; i < 35; i++)
+            {
+                function.Delete(i);
+            }
+
+            Assert.AreEqual(64, function.TableCount, "Wielkosc tablicy jest zla po odejmowaniu elementow");
         }
     }
 }

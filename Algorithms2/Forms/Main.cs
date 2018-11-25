@@ -176,15 +176,25 @@ namespace Algorithms2.Forms
             var errorMessage = String.Empty;
 
             int tableSize;
+            double ratio;
 
             if (!Int32.TryParse(TableSizeHashFunctionTb.Text, out tableSize) || tableSize < 1)
             {
                 errorMessage += "Niepoprawna wartosc wielkosci tablicy\n";
             }
 
+            if (!double.TryParse(HashFunctionRatioTb.Text, out ratio))
+            {
+                errorMessage += "Wspolczynnik nie jest wartoscia liczbowa\n";
+            }
+            else if (ratio < 0 || ratio > 1)
+            {
+                errorMessage += "Wspolczynnik powinien miec wartosc z przedzialu [0,1]\n";
+            }
+
             if (string.IsNullOrEmpty(errorMessage))
             {
-                await StartAlgorithm(new HashFunction(tableSize));
+                await StartAlgorithm(new HashFunction(tableSize, ratio));
             }
             else
             {
@@ -212,6 +222,8 @@ namespace Algorithms2.Forms
             HashFunctionStartBtn.Visible = visible;
             TableSizeHashFunctionLbl.Visible = visible;
             TableSizeHashFunctionTb.Visible = visible;
+            HashFunctionRatioLbl.Visible = visible;
+            HashFunctionRatioTb.Visible = visible;
         }
 
         private void VisibleChessJumperButtons(bool visible)
@@ -240,6 +252,8 @@ namespace Algorithms2.Forms
             HashFunctionStartBtn.Visible = visible;
             TableSizeHashFunctionLbl.Visible = visible;
             TableSizeHashFunctionTb.Visible = visible;
+            HashFunctionRatioLbl.Visible = visible;
+            HashFunctionRatioTb.Visible = visible;
         }
     }
 }

@@ -13,6 +13,7 @@ namespace Algorithms2.Algorithms
         private List<List<int>> table;
         private int tableCounter;
         private int tableSize;
+        private double alfa; // wspolczynnik ktory brany jest pod uwage, gdy tablica powinna byc zwiekszona/zmniejszona
 
         public TimeSpan LastActionTime { get; private set; }
 
@@ -25,8 +26,15 @@ namespace Algorithms2.Algorithms
             private set { }
         }
 
-        public HashFunction(int tableSize)
+        public HashFunction(int tableSize, double alfa)
         {
+            if (alfa < 0 || alfa > 1)
+            {
+                throw new Exception("Nieprawidlowy wspolczynnik");
+            }
+
+            this.alfa = alfa;
+
             stopwatch = new Stopwatch();
 
             table = new List<List<int>>();
@@ -87,9 +95,9 @@ namespace Algorithms2.Algorithms
             table[index].Add(value);
             tableCounter++;
 
-            if (tableCounter == tableSize)
+            if (tableCounter >= (1 + alfa) * tableSize)
             {
-                RebuildTable();
+                RebuildTable(true);
             }
 
             return true;
@@ -114,6 +122,11 @@ namespace Algorithms2.Algorithms
             table[index].Remove(value);
             tableCounter--;
 
+            if (tableCounter <= ((1 + alfa) * tableSize / 2))
+            {
+                RebuildTable(false);
+            }
+
             return true;
         }
 
@@ -127,14 +140,14 @@ namespace Algorithms2.Algorithms
             return result;
         }
 
-        private void RebuildTable()
+        private void RebuildTable(bool increase)
         {
             var newTable = new List<List<int>>();
 
             var oldTable = this.table;
             var oldTableSize = this.tableSize;
 
-            var newTableSize = 2 * oldTableSize;
+            var newTableSize = increase ? 2 * oldTableSize : oldTableSize / 2;
             
             for(int i=0; i < newTableSize; i++)
             {
