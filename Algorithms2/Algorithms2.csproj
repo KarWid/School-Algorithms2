@@ -47,8 +47,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Algorithms\BaseClasses\ChessJumperBase.cs" />
+    <Compile Include="Algorithms\BaseClasses\UnionFindBase.cs" />
     <Compile Include="Algorithms\ChessJumperProblem.cs" />
     <Compile Include="Algorithms\HashFunction.cs" />
+    <Compile Include="Algorithms\KruskalProblem.cs" />
     <Compile Include="Algorithms\NQueenPermutationsProblem.cs" />
     <Compile Include="Algorithms\NQueenWithReturnsProblem.cs" />
     <Compile Include="Algorithms\WarnsdorfProblem.cs" />
@@ -58,6 +60,12 @@
     </Compile>
     <Compile Include="Forms\ChessBoardForm.Designer.cs">
       <DependentUpon>ChessBoardForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\GraphForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\GraphForm.Designer.cs">
+      <DependentUpon>GraphForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Forms\HashFunctionForm.cs">
       <SubType>Form</SubType>
@@ -73,10 +81,16 @@
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IAlgorithm.cs" />
+    <Compile Include="Models\GraphEdge.cs" />
+    <Compile Include="Models\TreeNodeModel.cs" />
+    <Compile Include="Models\VertexViewData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="Forms\ChessBoardForm.resx">
       <DependentUpon>ChessBoardForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\GraphForm.resx">
+      <DependentUpon>GraphForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\HashFunctionForm.resx">
       <DependentUpon>HashFunctionForm.cs</DependentUpon>

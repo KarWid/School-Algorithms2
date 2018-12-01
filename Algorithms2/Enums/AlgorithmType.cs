@@ -7,6 +7,7 @@
         NQueenWithReturnsProblem,
         WarnsdorfProblem,
         NQueenPermutationsProblem,
-        HashFunction
+        HashFunction,
+        Kruskal
     }
 }

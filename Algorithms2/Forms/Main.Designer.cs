@@ -49,6 +49,10 @@
             this.HashFunctionStartBtn = new System.Windows.Forms.Button();
             this.HashFunctionRatioTb = new System.Windows.Forms.TextBox();
             this.HashFunctionRatioLbl = new System.Windows.Forms.Label();
+            this.KruskalBtn = new System.Windows.Forms.Button();
+            this.KruskalSourceFileTb = new System.Windows.Forms.TextBox();
+            this.KruskalFindSourceFileBtn = new System.Windows.Forms.Button();
+            this.KruskalStartBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ChessJumperProblemBtn
@@ -214,9 +218,9 @@
             // 
             this.HashFunctionStartBtn.Location = new System.Drawing.Point(356, 224);
             this.HashFunctionStartBtn.Name = "HashFunctionStartBtn";
-            this.HashFunctionStartBtn.Size = new System.Drawing.Size(152, 20);
+            this.HashFunctionStartBtn.Size = new System.Drawing.Size(152, 21);
             this.HashFunctionStartBtn.TabIndex = 19;
-            this.HashFunctionStartBtn.Text = "Uruchom N Hetmanow";
+            this.HashFunctionStartBtn.Text = "Uruchom funkcję hashującą";
             this.HashFunctionStartBtn.UseVisualStyleBackColor = true;
             this.HashFunctionStartBtn.Click += new System.EventHandler(this.HashFunctionStartBtn_Click);
             // 
@@ -236,11 +240,52 @@
             this.HashFunctionRatioLbl.TabIndex = 20;
             this.HashFunctionRatioLbl.Text = "Współczynnik";
             // 
+            // KruskalBtn
+            // 
+            this.KruskalBtn.Location = new System.Drawing.Point(12, 279);
+            this.KruskalBtn.Name = "KruskalBtn";
+            this.KruskalBtn.Size = new System.Drawing.Size(165, 48);
+            this.KruskalBtn.TabIndex = 22;
+            this.KruskalBtn.Text = "Kruskal";
+            this.KruskalBtn.UseVisualStyleBackColor = true;
+            this.KruskalBtn.Click += new System.EventHandler(this.KruskalBtn_Click);
+            // 
+            // KruskalSourceFileTb
+            // 
+            this.KruskalSourceFileTb.Location = new System.Drawing.Point(192, 307);
+            this.KruskalSourceFileTb.Name = "KruskalSourceFileTb";
+            this.KruskalSourceFileTb.Size = new System.Drawing.Size(143, 20);
+            this.KruskalSourceFileTb.TabIndex = 23;
+            // 
+            // KruskalFindSourceFileBtn
+            // 
+            this.KruskalFindSourceFileBtn.Location = new System.Drawing.Point(192, 279);
+            this.KruskalFindSourceFileBtn.Name = "KruskalFindSourceFileBtn";
+            this.KruskalFindSourceFileBtn.Size = new System.Drawing.Size(143, 22);
+            this.KruskalFindSourceFileBtn.TabIndex = 24;
+            this.KruskalFindSourceFileBtn.Text = "Wybierz plik";
+            this.KruskalFindSourceFileBtn.UseVisualStyleBackColor = true;
+            this.KruskalFindSourceFileBtn.Click += new System.EventHandler(this.KruskalFindSourceFileBtn_Click);
+            // 
+            // KruskalStartBtn
+            // 
+            this.KruskalStartBtn.Location = new System.Drawing.Point(356, 279);
+            this.KruskalStartBtn.Name = "KruskalStartBtn";
+            this.KruskalStartBtn.Size = new System.Drawing.Size(152, 21);
+            this.KruskalStartBtn.TabIndex = 25;
+            this.KruskalStartBtn.Text = "Uruchom Kruskala";
+            this.KruskalStartBtn.UseVisualStyleBackColor = true;
+            this.KruskalStartBtn.Click += new System.EventHandler(this.KruskalStartBtn_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1064, 456);
+            this.Controls.Add(this.KruskalStartBtn);
+            this.Controls.Add(this.KruskalFindSourceFileBtn);
+            this.Controls.Add(this.KruskalSourceFileTb);
+            this.Controls.Add(this.KruskalBtn);
             this.Controls.Add(this.HashFunctionRatioTb);
             this.Controls.Add(this.HashFunctionRatioLbl);
             this.Controls.Add(this.HashFunctionStartBtn);
@@ -292,6 +337,10 @@
         private System.Windows.Forms.Button HashFunctionStartBtn;
         private System.Windows.Forms.TextBox HashFunctionRatioTb;
         private System.Windows.Forms.Label HashFunctionRatioLbl;
+        private System.Windows.Forms.Button KruskalBtn;
+        private System.Windows.Forms.TextBox KruskalSourceFileTb;
+        private System.Windows.Forms.Button KruskalFindSourceFileBtn;
+        private System.Windows.Forms.Button KruskalStartBtn;
     }
 }
 

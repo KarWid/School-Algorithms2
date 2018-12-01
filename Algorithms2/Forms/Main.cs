@@ -2,6 +2,9 @@
 using System.Windows.Forms;
 using System.Drawing;
 using System.Threading.Tasks;
+using System.IO;
+using System.Collections.Generic;
+using Algorithms2.Models;
 using Algorithms2.Algorithms;
 using Algorithms2.Interfaces;
 using Algorithms2.Enums;
@@ -52,6 +55,9 @@ namespace Algorithms2.Forms
                 case AlgorithmType.HashFunction:
                     VisibleHashFunctionButtons(visible);
                     break;
+                case AlgorithmType.Kruskal:
+                    VisibleKruskalButtons(visible);
+                    break;
                 case AlgorithmType.None:
                     VisibleAllButtons(visible);
                     break;
@@ -90,6 +96,12 @@ namespace Algorithms2.Forms
         {
             _lastAlgorithm = AlgorithmType.HashFunction;
             VisibleChessControls(true, AlgorithmType.HashFunction);
+        }
+
+        private void KruskalBtn_Click(object sender, EventArgs e)
+        {
+            _lastAlgorithm = AlgorithmType.Kruskal;
+            VisibleChessControls(true, AlgorithmType.Kruskal);
         }
 
         // start algorithm
@@ -202,6 +214,64 @@ namespace Algorithms2.Forms
             }
         }
 
+        private async void KruskalStartBtn_Click(object sender, EventArgs e)
+        {
+            var someException = false;
+            var tree = new List<TreeNodeModel<int, int>>();
+
+            var fileName = KruskalSourceFileTb.Text;
+
+            if (string.IsNullOrEmpty(fileName))
+            {
+                MessageBox.Show("Brak pliku z którego mam pobrać dane");
+                return;
+            }
+
+            try
+            {
+                var lines = File.ReadAllLines(fileName);
+
+                for (int iLines = 0; iLines < lines.Length; iLines++)
+                {
+                    var values = lines[iLines].Split(';');
+
+                    var node = Int32.Parse(values[0]);
+                    var list = new List<TreeNeighbourNode<int, int>>();
+
+                    for (int jValues=1; jValues < values.Length;)
+                    {
+                        var treeNeighourNode = new TreeNeighbourNode<int, int>
+                        {
+                            Name = Int32.Parse(values[jValues++]),
+                            Weight = Int32.Parse(values[jValues++])
+                        };
+
+                        list.Add(treeNeighourNode);
+                    }
+
+                    var treeNodeModel = new TreeNodeModel<int, int>(node, list);
+                    tree.Add(treeNodeModel);
+                }
+            }
+            catch (Exception ex)
+            {
+                var content = ex.Message;
+
+                content += "\nLinia w pliku powinna zawierać dane:\nWierzhołek;Sasiad;Waga;Sasiad;Waga;Sasiad;Waga;...";
+
+                MessageBox.Show(content);
+
+                someException = true;
+            }
+
+            if (!someException)
+            {
+                await StartAlgorithm(new KruskalProblem(tree));
+            }
+
+            KruskalSourceFileTb.Text = "";
+        }
+
         // show buttons
         private void VisibleAllButtons(bool visible)
         {
@@ -224,6 +294,10 @@ namespace Algorithms2.Forms
             TableSizeHashFunctionTb.Visible = visible;
             HashFunctionRatioLbl.Visible = visible;
             HashFunctionRatioTb.Visible = visible;
+
+            KruskalFindSourceFileBtn.Visible = visible;
+            KruskalSourceFileTb.Visible = visible;
+            KruskalStartBtn.Visible = visible;
         }
 
         private void VisibleChessJumperButtons(bool visible)
@@ -254,6 +328,29 @@ namespace Algorithms2.Forms
             TableSizeHashFunctionTb.Visible = visible;
             HashFunctionRatioLbl.Visible = visible;
             HashFunctionRatioTb.Visible = visible;
+        }
+
+        private void VisibleKruskalButtons(bool visible)
+        {
+            KruskalFindSourceFileBtn.Visible = visible;
+            KruskalSourceFileTb.Visible = visible;
+            KruskalStartBtn.Visible = visible;
+        }
+
+        // other buttons
+        private void KruskalFindSourceFileBtn_Click(object sender, EventArgs e)
+        {
+            var dialog = new OpenFileDialog();
+
+            dialog.FileName = @"C:\Users\Karol\Desktop\KruskalTree.txt";
+            dialog.Filter = "Pliki tekstowe (*.txt)|*.txt";
+
+            var result = dialog.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                KruskalSourceFileTb.Text = dialog.FileName;
+            }
         }
     }
 }
