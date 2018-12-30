@@ -49,6 +49,7 @@
     <Compile Include="Algorithms\BaseClasses\ChessJumperBase.cs" />
     <Compile Include="Algorithms\BaseClasses\UnionFindBase.cs" />
     <Compile Include="Algorithms\ChessJumperProblem.cs" />
+    <Compile Include="Algorithms\CNF2Problem.cs" />
     <Compile Include="Algorithms\HashFunction.cs" />
     <Compile Include="Algorithms\KruskalProblem.cs" />
     <Compile Include="Algorithms\NQueenPermutationsProblem.cs" />
@@ -82,7 +83,9 @@
     </Compile>
     <Compile Include="Interfaces\IAlgorithm.cs" />
     <Compile Include="Models\GraphEdge.cs" />
+    <Compile Include="Models\StronglyCoherentComponent.cs" />
     <Compile Include="Models\TreeNodeModel.cs" />
+    <Compile Include="Models\Vertex.cs" />
     <Compile Include="Models\VertexViewData.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

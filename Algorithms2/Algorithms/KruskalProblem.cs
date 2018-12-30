@@ -12,12 +12,12 @@ namespace Algorithms2.Algorithms
 {
     public class KruskalProblem : UnionFindBase, IAlgorithm
     {
-        private Stopwatch stopwatch;
-        private int[] vertexNames;
-        private List<GraphEdge> edges;
-        private List<GraphEdge> result;
+        protected Stopwatch stopwatch;
+        protected int[] vertexNames;
+        protected List<GraphEdge> edges;
+        protected List<GraphEdge> result;
 
-        public TimeSpan LastActionTime { get; private set; }
+        public virtual TimeSpan LastActionTime { get; protected set; }
 
         public KruskalProblem(List<TreeNodeModel<int, int>> tree) : base(tree)
         {
@@ -46,13 +46,13 @@ namespace Algorithms2.Algorithms
             stopwatch = new Stopwatch();
         }
 
-        public void ShowResult()
+        public virtual void ShowResult()
         {
             var form = new GraphForm(vertexNames, edges, result);
             form.Show();
         }
 
-        public async Task Start()
+        public virtual async Task Start()
         {
             await Task.Run(() =>
             {
@@ -65,7 +65,7 @@ namespace Algorithms2.Algorithms
             });
         }
 
-        private List<GraphEdge> MinimumSpanningTree()
+        protected List<GraphEdge> MinimumSpanningTree()
         {
             var result = new List<GraphEdge>();
 

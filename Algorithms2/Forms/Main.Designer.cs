@@ -53,6 +53,10 @@
             this.KruskalSourceFileTb = new System.Windows.Forms.TextBox();
             this.KruskalFindSourceFileBtn = new System.Windows.Forms.Button();
             this.KruskalStartBtn = new System.Windows.Forms.Button();
+            this.CNF2StartBtn = new System.Windows.Forms.Button();
+            this.CNF2FindSourceFileBtn = new System.Windows.Forms.Button();
+            this.CNF2SourceFileTb = new System.Windows.Forms.TextBox();
+            this.CNF2Btn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ChessJumperProblemBtn
@@ -277,11 +281,52 @@
             this.KruskalStartBtn.UseVisualStyleBackColor = true;
             this.KruskalStartBtn.Click += new System.EventHandler(this.KruskalStartBtn_Click);
             // 
+            // CNF2StartBtn
+            // 
+            this.CNF2StartBtn.Location = new System.Drawing.Point(882, 12);
+            this.CNF2StartBtn.Name = "CNF2StartBtn";
+            this.CNF2StartBtn.Size = new System.Drawing.Size(152, 21);
+            this.CNF2StartBtn.TabIndex = 29;
+            this.CNF2StartBtn.Text = "Uruchom 2-CNF";
+            this.CNF2StartBtn.UseVisualStyleBackColor = true;
+            this.CNF2StartBtn.Click += new System.EventHandler(this.CNF2StartBtn_Click);
+            // 
+            // CNF2FindSourceFileBtn
+            // 
+            this.CNF2FindSourceFileBtn.Location = new System.Drawing.Point(718, 12);
+            this.CNF2FindSourceFileBtn.Name = "CNF2FindSourceFileBtn";
+            this.CNF2FindSourceFileBtn.Size = new System.Drawing.Size(143, 22);
+            this.CNF2FindSourceFileBtn.TabIndex = 28;
+            this.CNF2FindSourceFileBtn.Text = "Wybierz plik";
+            this.CNF2FindSourceFileBtn.UseVisualStyleBackColor = true;
+            this.CNF2FindSourceFileBtn.Click += new System.EventHandler(this.CNF2FindSourceFileBtn_Click);
+            // 
+            // CNF2SourceFileTb
+            // 
+            this.CNF2SourceFileTb.Location = new System.Drawing.Point(718, 40);
+            this.CNF2SourceFileTb.Name = "CNF2SourceFileTb";
+            this.CNF2SourceFileTb.Size = new System.Drawing.Size(143, 20);
+            this.CNF2SourceFileTb.TabIndex = 27;
+            // 
+            // CNF2Btn
+            // 
+            this.CNF2Btn.Location = new System.Drawing.Point(538, 12);
+            this.CNF2Btn.Name = "CNF2Btn";
+            this.CNF2Btn.Size = new System.Drawing.Size(165, 48);
+            this.CNF2Btn.TabIndex = 26;
+            this.CNF2Btn.Text = "2-CNF";
+            this.CNF2Btn.UseVisualStyleBackColor = true;
+            this.CNF2Btn.Click += new System.EventHandler(this.CNF2Btn_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1064, 456);
+            this.Controls.Add(this.CNF2StartBtn);
+            this.Controls.Add(this.CNF2FindSourceFileBtn);
+            this.Controls.Add(this.CNF2SourceFileTb);
+            this.Controls.Add(this.CNF2Btn);
             this.Controls.Add(this.KruskalStartBtn);
             this.Controls.Add(this.KruskalFindSourceFileBtn);
             this.Controls.Add(this.KruskalSourceFileTb);
@@ -341,6 +386,10 @@
         private System.Windows.Forms.TextBox KruskalSourceFileTb;
         private System.Windows.Forms.Button KruskalFindSourceFileBtn;
         private System.Windows.Forms.Button KruskalStartBtn;
+        private System.Windows.Forms.Button CNF2StartBtn;
+        private System.Windows.Forms.Button CNF2FindSourceFileBtn;
+        private System.Windows.Forms.TextBox CNF2SourceFileTb;
+        private System.Windows.Forms.Button CNF2Btn;
     }
 }
 

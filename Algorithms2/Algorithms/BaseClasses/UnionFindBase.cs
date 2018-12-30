@@ -9,10 +9,10 @@ namespace Algorithms2.Algorithms.BaseClasses
         protected List<TreeNodeModel<int, int>> tree { get; set; }
 
         protected int verticesCount;
-        protected int[] count;
-        protected int[] name;
-        protected int[] father;
-        protected int[] root;
+        protected Dictionary<int,int> count;
+        protected Dictionary<int, int> name;
+        protected Dictionary<int, int> father;
+        protected Dictionary<int, int> root;
 
         public UnionFindBase(List<TreeNodeModel<int, int>> tree)
         {
@@ -23,18 +23,18 @@ namespace Algorithms2.Algorithms.BaseClasses
 
             verticesCount = tree.Count;
 
-            count = new int[verticesCount];
-            name = new int[verticesCount];
-            father = new int[verticesCount];
-            root = new int[verticesCount];
+            count = new Dictionary<int, int>();
+            name = new Dictionary<int, int>();
+            father = new Dictionary<int, int>();
+            root = new Dictionary<int, int>();
 
-            for (int i=0; i < verticesCount; i++)
+            tree.ForEach(node =>
             {
-                count[i] = 1;
-                name[i] = tree[i].Name;
-                father[i] = 0;
-                root[i] = i;
-            }
+                count.Add(node.Name, 1);
+                name.Add(node.Name, node.Name);
+                father.Add(node.Name, 0);
+                root.Add(node.Name, node.Name);
+            });
 
             this.tree = new List<TreeNodeModel<int, int>>();
 

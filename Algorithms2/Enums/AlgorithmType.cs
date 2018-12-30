@@ -8,6 +8,7 @@
         WarnsdorfProblem,
         NQueenPermutationsProblem,
         HashFunction,
-        Kruskal
+        Kruskal,
+        CNF2
     }
 }

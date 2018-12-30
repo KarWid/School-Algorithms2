@@ -8,6 +8,7 @@ using Algorithms2.Models;
 using Algorithms2.Algorithms;
 using Algorithms2.Interfaces;
 using Algorithms2.Enums;
+using System.Linq;
 
 namespace Algorithms2.Forms
 {
@@ -40,34 +41,9 @@ namespace Algorithms2.Forms
             ChessJumperProblemBtn.Enabled = enable;
         }
 
-        private void VisibleChessControls(bool visible, AlgorithmType algorithmType)
-        {
-            VisibleAllButtons(false);
-
-            switch (algorithmType)
-            {
-                case AlgorithmType.ChessJumperProblem:
-                    VisibleChessJumperButtons(visible);
-                    break;
-                case AlgorithmType.NQueenWithReturnsProblem:
-                    VisibleNQueenWithReturnsButtons(visible);
-                    break;
-                case AlgorithmType.HashFunction:
-                    VisibleHashFunctionButtons(visible);
-                    break;
-                case AlgorithmType.Kruskal:
-                    VisibleKruskalButtons(visible);
-                    break;
-                case AlgorithmType.None:
-                    VisibleAllButtons(visible);
-                    break;
-                default:
-                    break;
-            }
-        }
-
         // buttons click
         // choose problem
+        #region Choose problem
         private void NQueenProblemWithReturnsBtn_Click(object sender, EventArgs e)
         {
             _lastAlgorithm = AlgorithmType.NQueenWithReturnsProblem;
@@ -104,7 +80,15 @@ namespace Algorithms2.Forms
             VisibleChessControls(true, AlgorithmType.Kruskal);
         }
 
+        private void CNF2Btn_Click(object sender, EventArgs e)
+        {
+            _lastAlgorithm = AlgorithmType.CNF2;
+            VisibleChessControls(true, AlgorithmType.CNF2);
+        }
+        #endregion
+
         // start algorithm
+        #region Start algorithm
         private async void StartChessJumperProblemBtn_Click(object sender, EventArgs e)
         {
             var errorMessage = String.Empty;
@@ -272,32 +256,118 @@ namespace Algorithms2.Forms
             KruskalSourceFileTb.Text = "";
         }
 
+        private async void CNF2StartBtn_Click(object sender, EventArgs e)
+        {
+            var someException = false;
+            var tree = new List<TreeNodeModel<int, int>>();
+
+            var fileName = CNF2SourceFileTb.Text;
+
+            if (string.IsNullOrEmpty(fileName))
+            {
+                MessageBox.Show("Brak pliku z którego mam pobrać dane");
+                return;
+            }
+
+            try
+            {
+                var lines = File.ReadAllLines(fileName);
+
+                for (int iLines = 0; iLines < lines.Length; iLines++)
+                {
+                    var values = lines[iLines].Split(';');
+
+                    int nodeFrom, nodeTo;
+                    int weight = 0;
+
+                    Int32.TryParse(values[0], out nodeFrom);
+                    Int32.TryParse(values[1], out nodeTo);
+
+                    nodeFrom *= -1;
+
+                    if (values.Length > 2)
+                    {
+                        Int32.TryParse(values[2], out weight);
+                    }
+
+                    var node = tree.Where(x => x.Name == nodeFrom).FirstOrDefault();
+
+                    var neighbour = new TreeNeighbourNode<int, int>
+                    {
+                        Name = nodeTo,
+                        Weight = weight
+                    };
+
+                    if (node == null)
+                    {
+                        var neighbours = new List<TreeNeighbourNode<int, int>>();
+                        neighbours.Add(neighbour);
+                        tree.Add(new TreeNodeModel<int, int>(nodeFrom, neighbours));
+                    }
+                    else
+                    {
+                        node.Neighbours.Add(neighbour);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                var content = ex.Message;
+
+                content += "\nLinia w pliku powinna zawierać dane:\nWierzhołek;Wierzhołek;Waga (Waga opcjonalnie)";
+
+                MessageBox.Show(content);
+
+                someException = true;
+            }
+
+            if (!someException)
+            {
+                await StartAlgorithm(new CNF2Problem(tree));
+            }
+
+            CNF2SourceFileTb.Text = "";
+        }
+        #endregion
+
         // show buttons
+        #region Show buttons
+        private void VisibleChessControls(bool visible, AlgorithmType algorithmType)
+        {
+            VisibleAllButtons(false);
+
+            switch (algorithmType)
+            {
+                case AlgorithmType.ChessJumperProblem:
+                    VisibleChessJumperButtons(visible);
+                    break;
+                case AlgorithmType.NQueenWithReturnsProblem:
+                    VisibleNQueenWithReturnsButtons(visible);
+                    break;
+                case AlgorithmType.HashFunction:
+                    VisibleHashFunctionButtons(visible);
+                    break;
+                case AlgorithmType.Kruskal:
+                    VisibleKruskalButtons(visible);
+                    break;
+                case AlgorithmType.CNF2:
+                    VisibleCNF2Buttons(visible);
+                    break;
+                case AlgorithmType.None:
+                    VisibleAllButtons(visible);
+                    break;
+                default:
+                    break;
+            }
+        }
+
         private void VisibleAllButtons(bool visible)
         {
-            ChessBoardSizeLbl.Visible = visible;
-            ChessStartFieldColumnLbl.Visible = visible;
-            ChessStartFieldRowLbl.Visible = visible;
-            StartFieldLbl.Visible = visible;
-            ChessBoardSizeNQueenLbl.Visible = visible;
-
-            ChessBoardSizeTb.Visible = visible;
-            ChessStartFieldColumnTb.Visible = visible;
-            ChessStartFieldRowTb.Visible = visible;
-            ChessBoardSizeNQueenTb.Visible = visible;
-
-            StartChessJumperProblemBtn.Visible = visible;
-            NQueenStartProblemBtn.Visible = visible;
-
-            HashFunctionStartBtn.Visible = visible;
-            TableSizeHashFunctionLbl.Visible = visible;
-            TableSizeHashFunctionTb.Visible = visible;
-            HashFunctionRatioLbl.Visible = visible;
-            HashFunctionRatioTb.Visible = visible;
-
-            KruskalFindSourceFileBtn.Visible = visible;
-            KruskalSourceFileTb.Visible = visible;
-            KruskalStartBtn.Visible = visible;
+            VisibleChessJumperButtons(visible);
+            VisibleNQueenWithReturnsButtons(visible);
+            VisibleHashFunctionButtons(visible);
+            VisibleKruskalButtons(visible);
+            VisibleCNF2Buttons(visible);
         }
 
         private void VisibleChessJumperButtons(bool visible)
@@ -317,7 +387,6 @@ namespace Algorithms2.Forms
         {
             ChessBoardSizeNQueenLbl.Visible = visible;
             ChessBoardSizeNQueenTb.Visible = visible;
-
             NQueenStartProblemBtn.Visible = visible;
         }
 
@@ -337,7 +406,16 @@ namespace Algorithms2.Forms
             KruskalStartBtn.Visible = visible;
         }
 
+        private void VisibleCNF2Buttons(bool visible)
+        {
+            CNF2FindSourceFileBtn.Visible = visible;
+            CNF2SourceFileTb.Visible = visible;
+            CNF2StartBtn.Visible = visible;
+        }
+        #endregion
+
         // other buttons
+        #region Other functionalities
         private void KruskalFindSourceFileBtn_Click(object sender, EventArgs e)
         {
             var dialog = new OpenFileDialog();
@@ -352,5 +430,21 @@ namespace Algorithms2.Forms
                 KruskalSourceFileTb.Text = dialog.FileName;
             }
         }
+
+        private void CNF2FindSourceFileBtn_Click(object sender, EventArgs e)
+        {
+            var dialog = new OpenFileDialog();
+
+            dialog.FileName = @"C:\Users\Karol\Desktop\CNF2.txt";
+            dialog.Filter = "Pliki tekstowe (*.txt)|*.txt";
+
+            var result = dialog.ShowDialog();
+
+            if (result == DialogResult.OK)
+            {
+                CNF2SourceFileTb.Text = dialog.FileName;
+            }
+        }
+        #endregion
     }
 }

@@ -10,7 +10,12 @@ namespace Algorithms2.Models
 
         public object Clone()
         {
-            return new GraphEdge { Node1 = Node1, Node2 = Node2, Weight = Weight };
+            return new GraphEdge
+            {
+                Node1 = Node1,
+                Node2 = Node2,
+                Weight = Weight,
+            };
         }
     }
 }

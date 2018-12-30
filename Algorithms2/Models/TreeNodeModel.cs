@@ -28,10 +28,19 @@ namespace Algorithms2.Models
     {
         public NameType Name { get; set; }
         public WeightType Weight { get; set; }
+        public int EntryTime { get; set; }
+        public int ProcessingTime { get; set; }
+
 
         public object Clone()
         {
-            return new TreeNeighbourNode<NameType, WeightType> { Name = Name, Weight = Weight };
+            return new TreeNeighbourNode<NameType, WeightType>
+            {
+                Name = Name,
+                Weight = Weight,
+                EntryTime = EntryTime,
+                ProcessingTime = ProcessingTime
+            };
         }
     }
 
