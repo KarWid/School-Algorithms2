@@ -9,6 +9,7 @@
         NQueenPermutationsProblem,
         HashFunction,
         Kruskal,
-        CNF2
+        CNF2,
+        Articulation
     }
 }

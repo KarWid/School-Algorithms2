@@ -46,6 +46,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Algorithms\ArticulationBridgeProblem.cs" />
     <Compile Include="Algorithms\BaseClasses\ChessJumperBase.cs" />
     <Compile Include="Algorithms\BaseClasses\UnionFindBase.cs" />
     <Compile Include="Algorithms\ChessJumperProblem.cs" />
@@ -82,6 +83,7 @@
       <DependentUpon>Main.cs</DependentUpon>
     </Compile>
     <Compile Include="Interfaces\IAlgorithm.cs" />
+    <Compile Include="Models\ArticulationResult.cs" />
     <Compile Include="Models\GraphEdge.cs" />
     <Compile Include="Models\StronglyCoherentComponent.cs" />
     <Compile Include="Models\TreeNodeModel.cs" />

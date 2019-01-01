@@ -85,6 +85,12 @@ namespace Algorithms2.Forms
             _lastAlgorithm = AlgorithmType.CNF2;
             VisibleChessControls(true, AlgorithmType.CNF2);
         }
+
+        private void ArticulationBtn_Click(object sender, EventArgs e)
+        {
+            _lastAlgorithm = AlgorithmType.Articulation;
+            VisibleChessControls(true, AlgorithmType.Articulation);
+        }
         #endregion
 
         // start algorithm
@@ -328,6 +334,77 @@ namespace Algorithms2.Forms
 
             CNF2SourceFileTb.Text = "";
         }
+
+        private async void ArticulationStartBtn_Click(object sender, EventArgs e)
+        {
+            var someException = false;
+            var tree = new List<TreeNodeModel<int, int>>();
+
+            var fileName = ArticulationSourceFileTb.Text;
+
+            if (string.IsNullOrEmpty(fileName))
+            {
+                MessageBox.Show("Brak pliku z którego mam pobrać dane");
+                return;
+            }
+
+            try
+            {
+                var lines = File.ReadAllLines(fileName);
+
+                for (int iLines = 0; iLines < lines.Length; iLines++)
+                {
+                    var values = lines[iLines].Split(';');
+
+                    int nodeFrom, nodeTo;
+                    int weight = 0;
+
+                    Int32.TryParse(values[0], out nodeFrom);
+                    Int32.TryParse(values[1], out nodeTo);
+
+                    if (values.Length > 2)
+                    {
+                        Int32.TryParse(values[2], out weight);
+                    }
+
+                    var node = tree.Where(x => x.Name == nodeFrom).FirstOrDefault();
+
+                    var neighbour = new TreeNeighbourNode<int, int>
+                    {
+                        Name = nodeTo,
+                        Weight = weight
+                    };
+
+                    if (node == null)
+                    {
+                        var neighbours = new List<TreeNeighbourNode<int, int>>();
+                        neighbours.Add(neighbour);
+                        tree.Add(new TreeNodeModel<int, int>(nodeFrom, neighbours));
+                    }
+                    else
+                    {
+                        node.Neighbours.Add(neighbour);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                var content = ex.Message;
+
+                content += "\nLinia w pliku powinna zawierać dane:\nWierzhołek;Wierzhołek;Waga (Waga opcjonalnie)";
+
+                MessageBox.Show(content);
+
+                someException = true;
+            }
+
+            if (!someException)
+            {
+                await StartAlgorithm(new ArticulationBridgeProblem(tree));
+            }
+
+            ArticulationSourceFileTb.Text = "";
+        }
         #endregion
 
         // show buttons
@@ -353,6 +430,9 @@ namespace Algorithms2.Forms
                 case AlgorithmType.CNF2:
                     VisibleCNF2Buttons(visible);
                     break;
+                case AlgorithmType.Articulation:
+                    VisibleArticulationButtons(visible);
+                    break;
                 case AlgorithmType.None:
                     VisibleAllButtons(visible);
                     break;
@@ -368,6 +448,7 @@ namespace Algorithms2.Forms
             VisibleHashFunctionButtons(visible);
             VisibleKruskalButtons(visible);
             VisibleCNF2Buttons(visible);
+            VisibleArticulationButtons(visible);
         }
 
         private void VisibleChessJumperButtons(bool visible)
@@ -412,37 +493,44 @@ namespace Algorithms2.Forms
             CNF2SourceFileTb.Visible = visible;
             CNF2StartBtn.Visible = visible;
         }
+
+        private void VisibleArticulationButtons(bool visible)
+        {
+            ArticulationFindSourceFileBtn.Visible = visible;
+            ArticulationSourceFileTb.Visible = visible;
+            ArticulationStartBtn.Visible = visible;
+        }
         #endregion
 
         // other buttons
         #region Other functionalities
         private void KruskalFindSourceFileBtn_Click(object sender, EventArgs e)
         {
-            var dialog = new OpenFileDialog();
-
-            dialog.FileName = @"C:\Users\Karol\Desktop\KruskalTree.txt";
-            dialog.Filter = "Pliki tekstowe (*.txt)|*.txt";
-
-            var result = dialog.ShowDialog();
-
-            if (result == DialogResult.OK)
-            {
-                KruskalSourceFileTb.Text = dialog.FileName;
-            }
+            GetFileNamePath(KruskalSourceFileTb, @"C:\Users\Karol\Desktop\KruskalTree.txt");
         }
 
         private void CNF2FindSourceFileBtn_Click(object sender, EventArgs e)
         {
+            GetFileNamePath(CNF2SourceFileTb, @"C:\Users\Karol\Desktop\CNF2.txt");
+        }
+
+        private void ArticulationFindSourceFileBtn_Click(object sender, EventArgs e)
+        {
+            GetFileNamePath(ArticulationSourceFileTb, @"C:\Users\Karol\Desktop\Articulation.txt");
+        }
+
+        private void GetFileNamePath(TextBox setTextbox, string defaultFileName)
+        {
             var dialog = new OpenFileDialog();
 
-            dialog.FileName = @"C:\Users\Karol\Desktop\CNF2.txt";
+            dialog.FileName = defaultFileName;
             dialog.Filter = "Pliki tekstowe (*.txt)|*.txt";
 
             var result = dialog.ShowDialog();
 
             if (result == DialogResult.OK)
             {
-                CNF2SourceFileTb.Text = dialog.FileName;
+                setTextbox.Text = dialog.FileName;
             }
         }
         #endregion

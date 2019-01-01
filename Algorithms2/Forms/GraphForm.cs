@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
 using System.Windows.Forms;
@@ -7,8 +6,18 @@ using Algorithms2.Models;
 
 namespace Algorithms2.Forms
 {
+    /// <summary>
+    /// Functionality in this class should be better implemented
+    /// but because of too many tasks related to university i used enum
+    /// </summary>
     public partial class GraphForm : Form
     {
+        private enum GraphType
+        {
+            Kruskal,
+            ArticulationEdge,
+        }
+
         private const int ELLIPSE_SIZE = 50;
         private const int VERTICES_IN_ROW = 2;
         private const int VERTICES_IN_COLUMN = 2;
@@ -23,12 +32,14 @@ namespace Algorithms2.Forms
             }
         }
 
-        private List<VertexViewData> rectangleVertices;
-        private Font font = new Font("Arial", 16);
+        private List<VertexViewData> _rectangleVertices;
+        private Font _font = new Font("Arial", 16);
 
-        private int[] vertices;
-        private List<GraphEdge> edges;
-        private List<GraphEdge> result;
+        private GraphType _graphType;
+        private int[] _vertices;
+        private List<GraphEdge> _edges;
+        private List<GraphEdge> _result;
+        private ArticulationResult _articulationResult;
 
         public GraphForm()
         {
@@ -41,27 +52,49 @@ namespace Algorithms2.Forms
 
             this.Size = new Size(HEIGHT, WIDTH);
 
-            rectangleVertices = new List<VertexViewData>();
+            _rectangleVertices = new List<VertexViewData>();
 
-            this.vertices = vertices;
-            this.edges = edges;
-            this.result = result;
+            _vertices = vertices;
+            _edges = edges;
+            _result = result;
+            _graphType = GraphType.Kruskal;
+        }
+
+        public GraphForm(ArticulationResult result)
+        {
+            InitializeComponent();
+
+            Size = new Size(HEIGHT, WIDTH);
+
+            _rectangleVertices = new List<VertexViewData>();
+            _graphType = GraphType.ArticulationEdge;
+
+            _articulationResult = result;
         }
 
         private void GraphForm_Paint(object sender, PaintEventArgs e)
         {
-            DrawVertices(e.Graphics);
+            switch (_graphType)
+            {
+                case GraphType.Kruskal:
+                    DrawVerticesKruskal(e.Graphics);
+                    break;
+                case GraphType.ArticulationEdge:
+                    DrawVerticesArticulation(e.Graphics);
+                    break;
+            }
+
             DrawAllEdges(e.Graphics);
             DrawResult(e.Graphics);
         }
 
-        private void DrawVertices(Graphics graphics)
+        private void DrawVerticesKruskal(Graphics graphics)
         {
             var vertexBackgroundColor = new SolidBrush(Color.Black);
             var vertexForGroundColor = new SolidBrush(Color.White);
             var partEllipseSize = ELLIPSE_SIZE / 4;
 
-            for (int i = 0; i < vertices.Length; i++)
+            for (int i = 0; i < _vertices.Length; i++)
             {
                 var row = i / VERTICES_IN_ROW;
                 var column = i - row * VERTICES_IN_ROW;
@@ -70,11 +103,49 @@ namespace Algorithms2.Forms
                 var x = CellSize * column;
 
                 var rectangle = new Rectangle(x, y, ELLIPSE_SIZE, ELLIPSE_SIZE);
-                rectangleVertices.Add(new VertexViewData { Rectangle = rectangle, Name = vertices[i] });
+
+                _rectangleVertices.Add(new VertexViewData { Rectangle = rectangle, Name = _vertices[i] });
+
                 graphics.FillEllipse(vertexBackgroundColor, rectangle);
-                graphics.DrawString(vertices[i].ToString(), 
-                                    font, 
+
+                graphics.DrawString(_vertices[i].ToString(),
+                                    _font, 
                                     vertexForGroundColor, 
+                                    new PointF(x + partEllipseSize, y + partEllipseSize));
+            }
+        }
+
+        private void DrawVerticesArticulation(Graphics graphics)
+        {
+            var vertexBackgroundColor = new SolidBrush(Color.Black);
+            var vertexForGroundColor = new SolidBrush(Color.White);
+            var partEllipseSize = ELLIPSE_SIZE / 4;
+
+            for (int i = 0; i < _articulationResult.GraphVertices.Count; i++)
+            {
+                var vertex = _articulationResult.GraphVertices[i];
+
+                vertexBackgroundColor = vertex.IsArticulationPoint ? new SolidBrush(Color.Red) : new SolidBrush(Color.Black); 
+
+                var row = i / VERTICES_IN_ROW;
+                var column = i - row * VERTICES_IN_ROW;
+
+                var y = CellSize * row + (ELLIPSE_SIZE * (column % 2));
+                var x = CellSize * column;
+
+                var rectangle = new Rectangle(x, y, ELLIPSE_SIZE, ELLIPSE_SIZE);
+
+                _rectangleVertices.Add(new VertexViewData
+                {
+                    Rectangle = rectangle,
+                    Name = vertex.Name
+                });
+
+                graphics.FillEllipse(vertexBackgroundColor, rectangle);
+
+                graphics.DrawString(vertex.Name.ToString(),
+                                    _font,
+                                    vertexForGroundColor,
                                     new PointF(x + partEllipseSize, y + partEllipseSize));
             }
         }
@@ -84,13 +155,17 @@ namespace Algorithms2.Forms
             var color = Color.Black;
             var pen = new Pen(color);
             var brush = new SolidBrush(color);
+            pen.Width = 1;
 
             var halfEllipseSize = ELLIPSE_SIZE / 2;
 
-            edges.ForEach(edge =>
+            _articulationResult.GraphEdges.ForEach(edge =>
             {
-                var point1 = rectangleVertices.FirstOrDefault(x => x.Name == edge.Node1).Rectangle.Location;
-                var point2 = rectangleVertices.FirstOrDefault(x => x.Name == edge.Node2).Rectangle.Location;
+                pen = edge.IsVisited ? new Pen(Color.Blue) : new Pen(Color.Black);
+                pen.Width = edge.IsVisited ? 3 : 1;
+
+                var point1 = _rectangleVertices.FirstOrDefault(x => x.Name == edge.Node1).Rectangle.Location;
+                var point2 = _rectangleVertices.FirstOrDefault(x => x.Name == edge.Node2).Rectangle.Location;
 
                 var x1 = point1.X + halfEllipseSize;
                 var y1 = point1.Y + halfEllipseSize;
@@ -100,12 +175,15 @@ namespace Algorithms2.Forms
                 var textPosX = (x1 + x2) / 2;
                 var textPosY = (y1 + y2) / 2;
 
-                graphics.DrawLine(pen, x1, y1, x2, y2); 
+                graphics.DrawLine(pen, x1, y1, x2, y2);
 
-                graphics.DrawString(edge.Weight.ToString(),
-                                    font,
-                                    brush,
-                                    new PointF(textPosX, textPosY));
+                if (edge.Weight != 0)
+                {
+                    graphics.DrawString(edge.Weight.ToString(),
+                                        _font,
+                                        brush,
+                                        new PointF(textPosX, textPosY));
+                }
             });
         }
 
@@ -116,10 +194,10 @@ namespace Algorithms2.Forms
 
             var partEllipseSize = ELLIPSE_SIZE / 2;
 
-            result.ForEach(edge =>
+            _articulationResult.Bridges.ForEach(edge =>
             {
-                var point1 = rectangleVertices.FirstOrDefault(x => x.Name == edge.Node1).Rectangle.Location;
-                var point2 = rectangleVertices.FirstOrDefault(x => x.Name == edge.Node2).Rectangle.Location;
+                var point1 = _rectangleVertices.FirstOrDefault(x => x.Name == edge.Node1).Rectangle.Location;
+                var point2 = _rectangleVertices.FirstOrDefault(x => x.Name == edge.Node2).Rectangle.Location;
 
                 graphics.DrawLine(pen,
                                   point1.X + partEllipseSize,

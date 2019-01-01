@@ -12,13 +12,14 @@ namespace Algorithms2.Algorithms
     // slajd 64
     public class CNF2Problem : IAlgorithm
     {
-        protected Stopwatch _stopwatch = new Stopwatch();
+        private List<StronglyCoherentComponent<int>> _result = new List<StronglyCoherentComponent<int>>();
 
-        protected List<StronglyCoherentComponent<int>> _result = new List<StronglyCoherentComponent<int>>();
+        protected Stopwatch _stopwatch = new Stopwatch();
         protected List<Vertex> _vertices = new List<Vertex>();
         protected List<TreeNodeModel<int, int>> _graph = new List<TreeNodeModel<int, int>>();
+        protected List<GraphEdge> _edges = new List<GraphEdge>();
 
-        public TimeSpan LastActionTime { get; private set; }
+        public virtual TimeSpan LastActionTime { get; protected set; }
 
         public CNF2Problem(List<TreeNodeModel<int, int>> graph)
         {
@@ -26,7 +27,7 @@ namespace Algorithms2.Algorithms
             {
                 _graph.Add(node.Clone() as TreeNodeModel<int, int>);
 
-                var y = _vertices.Any(x => x.Name == node.Name);
+                // add vertex
                 if (!_vertices.Any(x => x.Name == node.Name))
                 {
                     _vertices.Add(new Vertex
@@ -38,6 +39,7 @@ namespace Algorithms2.Algorithms
 
                 node.Neighbours.ForEach(neighbour =>
                 {
+                    // add vertex to vertices if no exists
                     if (!_vertices.Any(x => x.Name == neighbour.Name))
                     {
                         _vertices.Add(new Vertex
@@ -46,11 +48,18 @@ namespace Algorithms2.Algorithms
                             Visited = false
                         });
                     }
+
+                    // add edge
+                    _edges.Add(new GraphEdge
+                    {
+                        Node1 = node.Name,
+                        Node2 = neighbour.Name
+                    });
                 });
             });
         }
 
-        public void ShowResult()
+        public virtual void ShowResult()
         {
             string messageResult = "1 wiersz - 1 silnie spójna składowa\n";
 
@@ -70,7 +79,7 @@ namespace Algorithms2.Algorithms
             MessageBox.Show(messageResult);
         }
 
-        public async Task Start()
+        public virtual async Task Start()
         {
             await Task.Run(() =>
             {
@@ -88,14 +97,7 @@ namespace Algorithms2.Algorithms
             var result = new List<StronglyCoherentComponent<int>>();
 
             // dfs
-            int time = 1;
-            for (int i=0; i < _vertices.Count; i++)
-            {
-                if (_vertices[i].Visited == false)
-                {
-                    DFSUtil(i, time);
-                }
-            }
+            DFS();
 
             // graph transposition
             var transposedGraph = TransposeGraph(_graph);
@@ -121,23 +123,78 @@ namespace Algorithms2.Algorithms
         }
 
         //returns time
+        protected void DFS()
+        {
+            int time = 1;
+
+            for (int i = 0; i < _vertices.Count; i++)
+            {
+                if (_vertices[i].Visited == false)
+                {
+                    time = DFSUtil(i, time);
+                }
+            }
+        }
+
+        /// <summary>
+        /// Deep first search
+        /// </summary>
+        /// <param name="vertexIndex"></param>
+        /// <param name="time"></param>
+        /// <param name="parentTime"></param>
+        /// <returns></returns>
         protected int DFSUtil(int vertexIndex, int time)
         {
+            int children = 0;
+
             var vertex = _vertices[vertexIndex];
 
             vertex.Visited = true;
-            vertex.EntryTime = time++;
+            vertex.EntryTime = vertex.LowTime = time++;
 
             var graphVertex = _graph.Where(node => node.Name == vertex.Name).FirstOrDefault();
 
             graphVertex.Neighbours.ForEach(neighbour =>
             {
                 var index = _vertices.FindIndex(x => x.Name == neighbour.Name);
-                var isVisited = _vertices[index].Visited;
 
-                if (!isVisited)
+                var neighVertex = _vertices[index];
+
+                if (!neighVertex.Visited)
                 {
+                    neighVertex.ParentName = vertex.Name;
+                    _edges.Where(edge => edge.Node1 == vertex.Name && edge.Node2 == neighVertex.Name)
+                          .FirstOrDefault()
+                          .IsVisited = true;
+
                     time = DFSUtil(index, time);
+
+                    vertex.LowTime = Math.Min(vertex.LowTime, neighVertex.LowTime);
+
+                    // vertex is root of DFS tree and has two or more children
+                    if (vertex.ParentName == null && children > 1)
+                    {
+                        vertex.IsArticulationPoint = true;
+                    }
+
+                    // If vertex is not root and low value of one of its child is more
+                    // than entry time value of vertex
+                    if (vertex.ParentName != null && vertex.LowTime >= vertex.EntryTime)
+                    {
+                        vertex.IsArticulationPoint = true;
+                    }
+
+                    if (neighVertex.LowTime > vertex.EntryTime)
+                    {
+                        _edges.Where(x => x.Node2 == neighVertex.Name && x.Node1 == vertex.Name)
+                              .FirstOrDefault()
+                              .IsBridge = true;
+                    }
+                }
+                // Update low value of neighVertex for parent function calls
+                else if (neighVertex.Name != vertex.ParentName)
+                {
+                    vertex.LowTime = Math.Min(vertex.LowTime, neighVertex.LowTime);
                 }
             });
 

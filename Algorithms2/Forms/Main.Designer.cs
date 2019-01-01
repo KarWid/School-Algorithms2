@@ -57,6 +57,10 @@
             this.CNF2FindSourceFileBtn = new System.Windows.Forms.Button();
             this.CNF2SourceFileTb = new System.Windows.Forms.TextBox();
             this.CNF2Btn = new System.Windows.Forms.Button();
+            this.ArticulationStartBtn = new System.Windows.Forms.Button();
+            this.ArticulationFindSourceFileBtn = new System.Windows.Forms.Button();
+            this.ArticulationSourceFileTb = new System.Windows.Forms.TextBox();
+            this.ArticulationBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ChessJumperProblemBtn
@@ -318,11 +322,52 @@
             this.CNF2Btn.UseVisualStyleBackColor = true;
             this.CNF2Btn.Click += new System.EventHandler(this.CNF2Btn_Click);
             // 
+            // ArticulationStartBtn
+            // 
+            this.ArticulationStartBtn.Location = new System.Drawing.Point(882, 81);
+            this.ArticulationStartBtn.Name = "ArticulationStartBtn";
+            this.ArticulationStartBtn.Size = new System.Drawing.Size(152, 21);
+            this.ArticulationStartBtn.TabIndex = 33;
+            this.ArticulationStartBtn.Text = "Uruchom punkty artykulacji";
+            this.ArticulationStartBtn.UseVisualStyleBackColor = true;
+            this.ArticulationStartBtn.Click += new System.EventHandler(this.ArticulationStartBtn_Click);
+            // 
+            // ArticulationFindSourceFileBtn
+            // 
+            this.ArticulationFindSourceFileBtn.Location = new System.Drawing.Point(718, 81);
+            this.ArticulationFindSourceFileBtn.Name = "ArticulationFindSourceFileBtn";
+            this.ArticulationFindSourceFileBtn.Size = new System.Drawing.Size(143, 22);
+            this.ArticulationFindSourceFileBtn.TabIndex = 32;
+            this.ArticulationFindSourceFileBtn.Text = "Wybierz plik";
+            this.ArticulationFindSourceFileBtn.UseVisualStyleBackColor = true;
+            this.ArticulationFindSourceFileBtn.Click += new System.EventHandler(this.ArticulationFindSourceFileBtn_Click);
+            // 
+            // ArticulationSourceFileTb
+            // 
+            this.ArticulationSourceFileTb.Location = new System.Drawing.Point(718, 109);
+            this.ArticulationSourceFileTb.Name = "ArticulationSourceFileTb";
+            this.ArticulationSourceFileTb.Size = new System.Drawing.Size(143, 20);
+            this.ArticulationSourceFileTb.TabIndex = 31;
+            // 
+            // ArticulationBtn
+            // 
+            this.ArticulationBtn.Location = new System.Drawing.Point(538, 81);
+            this.ArticulationBtn.Name = "ArticulationBtn";
+            this.ArticulationBtn.Size = new System.Drawing.Size(165, 48);
+            this.ArticulationBtn.TabIndex = 30;
+            this.ArticulationBtn.Text = "Punkty artykulacji i mosty";
+            this.ArticulationBtn.UseVisualStyleBackColor = true;
+            this.ArticulationBtn.Click += new System.EventHandler(this.ArticulationBtn_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1064, 456);
+            this.Controls.Add(this.ArticulationStartBtn);
+            this.Controls.Add(this.ArticulationFindSourceFileBtn);
+            this.Controls.Add(this.ArticulationSourceFileTb);
+            this.Controls.Add(this.ArticulationBtn);
             this.Controls.Add(this.CNF2StartBtn);
             this.Controls.Add(this.CNF2FindSourceFileBtn);
             this.Controls.Add(this.CNF2SourceFileTb);
@@ -390,6 +435,10 @@
         private System.Windows.Forms.Button CNF2FindSourceFileBtn;
         private System.Windows.Forms.TextBox CNF2SourceFileTb;
         private System.Windows.Forms.Button CNF2Btn;
+        private System.Windows.Forms.Button ArticulationStartBtn;
+        private System.Windows.Forms.Button ArticulationFindSourceFileBtn;
+        private System.Windows.Forms.TextBox ArticulationSourceFileTb;
+        private System.Windows.Forms.Button ArticulationBtn;
     }
 }
 
