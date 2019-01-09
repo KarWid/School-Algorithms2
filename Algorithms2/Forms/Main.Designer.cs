@@ -61,6 +61,10 @@
             this.ArticulationFindSourceFileBtn = new System.Windows.Forms.Button();
             this.ArticulationSourceFileTb = new System.Windows.Forms.TextBox();
             this.ArticulationBtn = new System.Windows.Forms.Button();
+            this.TarjanStartBtn = new System.Windows.Forms.Button();
+            this.TarjanFindSourceFileBtn = new System.Windows.Forms.Button();
+            this.TarjanSourceFileTb = new System.Windows.Forms.TextBox();
+            this.TarjanBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ChessJumperProblemBtn
@@ -359,11 +363,52 @@
             this.ArticulationBtn.UseVisualStyleBackColor = true;
             this.ArticulationBtn.Click += new System.EventHandler(this.ArticulationBtn_Click);
             // 
+            // TarjanStartBtn
+            // 
+            this.TarjanStartBtn.Location = new System.Drawing.Point(882, 144);
+            this.TarjanStartBtn.Name = "TarjanStartBtn";
+            this.TarjanStartBtn.Size = new System.Drawing.Size(152, 21);
+            this.TarjanStartBtn.TabIndex = 37;
+            this.TarjanStartBtn.Text = "Uruchom Tarjana";
+            this.TarjanStartBtn.UseVisualStyleBackColor = true;
+            this.TarjanStartBtn.Click += new System.EventHandler(this.TarjanStartBtn_Click);
+            // 
+            // TarjanFindSourceFileBtn
+            // 
+            this.TarjanFindSourceFileBtn.Location = new System.Drawing.Point(718, 144);
+            this.TarjanFindSourceFileBtn.Name = "TarjanFindSourceFileBtn";
+            this.TarjanFindSourceFileBtn.Size = new System.Drawing.Size(143, 22);
+            this.TarjanFindSourceFileBtn.TabIndex = 36;
+            this.TarjanFindSourceFileBtn.Text = "Wybierz plik";
+            this.TarjanFindSourceFileBtn.UseVisualStyleBackColor = true;
+            this.TarjanFindSourceFileBtn.Click += new System.EventHandler(this.TarjanFindSourceFileBtn_Click);
+            // 
+            // TarjanSourceFileTb
+            // 
+            this.TarjanSourceFileTb.Location = new System.Drawing.Point(718, 172);
+            this.TarjanSourceFileTb.Name = "TarjanSourceFileTb";
+            this.TarjanSourceFileTb.Size = new System.Drawing.Size(143, 20);
+            this.TarjanSourceFileTb.TabIndex = 35;
+            // 
+            // TarjanBtn
+            // 
+            this.TarjanBtn.Location = new System.Drawing.Point(538, 144);
+            this.TarjanBtn.Name = "TarjanBtn";
+            this.TarjanBtn.Size = new System.Drawing.Size(165, 48);
+            this.TarjanBtn.TabIndex = 34;
+            this.TarjanBtn.Text = "Algorytm Tarjana";
+            this.TarjanBtn.UseVisualStyleBackColor = true;
+            this.TarjanBtn.Click += new System.EventHandler(this.TarjanBtn_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1064, 456);
+            this.Controls.Add(this.TarjanStartBtn);
+            this.Controls.Add(this.TarjanFindSourceFileBtn);
+            this.Controls.Add(this.TarjanSourceFileTb);
+            this.Controls.Add(this.TarjanBtn);
             this.Controls.Add(this.ArticulationStartBtn);
             this.Controls.Add(this.ArticulationFindSourceFileBtn);
             this.Controls.Add(this.ArticulationSourceFileTb);
@@ -439,6 +484,10 @@
         private System.Windows.Forms.Button ArticulationFindSourceFileBtn;
         private System.Windows.Forms.TextBox ArticulationSourceFileTb;
         private System.Windows.Forms.Button ArticulationBtn;
+        private System.Windows.Forms.Button TarjanStartBtn;
+        private System.Windows.Forms.Button TarjanFindSourceFileBtn;
+        private System.Windows.Forms.TextBox TarjanSourceFileTb;
+        private System.Windows.Forms.Button TarjanBtn;
     }
 }
 

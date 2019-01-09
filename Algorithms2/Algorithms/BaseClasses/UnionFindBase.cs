@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
 using Algorithms2.Models;
 
 namespace Algorithms2.Algorithms.BaseClasses
@@ -91,6 +92,12 @@ namespace Algorithms2.Algorithms.BaseClasses
             count[large] = count[large] + count[small];
             name[large] = nodeName;
             root[nodeName] = large;
+        }
+
+        protected void MakeSet(int vertexName)
+        {
+            father[vertexName] = 0;
+            count[vertexName] = 1;
         }
     }
 }

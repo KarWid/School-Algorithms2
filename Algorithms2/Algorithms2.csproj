@@ -55,6 +55,7 @@
     <Compile Include="Algorithms\KruskalProblem.cs" />
     <Compile Include="Algorithms\NQueenPermutationsProblem.cs" />
     <Compile Include="Algorithms\NQueenWithReturnsProblem.cs" />
+    <Compile Include="Algorithms\TarjanProblem.cs" />
     <Compile Include="Algorithms\WarnsdorfProblem.cs" />
     <Compile Include="Enums\AlgorithmType.cs" />
     <Compile Include="Forms\ChessBoardForm.cs">
@@ -86,6 +87,9 @@
     <Compile Include="Models\ArticulationResult.cs" />
     <Compile Include="Models\GraphEdge.cs" />
     <Compile Include="Models\StronglyCoherentComponent.cs" />
+    <Compile Include="Models\Tarjan\TarjanModel.cs" />
+    <Compile Include="Models\Tarjan\TarjanNodeModel.cs" />
+    <Compile Include="Models\Tarjan\TarjanTreeModel.cs" />
     <Compile Include="Models\TreeNodeModel.cs" />
     <Compile Include="Models\Vertex.cs" />
     <Compile Include="Models\VertexViewData.cs" />

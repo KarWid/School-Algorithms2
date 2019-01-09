@@ -4,11 +4,12 @@ using System.Drawing;
 using System.Threading.Tasks;
 using System.IO;
 using System.Collections.Generic;
+using System.Linq;
 using Algorithms2.Models;
 using Algorithms2.Algorithms;
 using Algorithms2.Interfaces;
 using Algorithms2.Enums;
-using System.Linq;
+using Algorithms2.Models.Tarjan;
 
 namespace Algorithms2.Forms
 {
@@ -25,20 +26,11 @@ namespace Algorithms2.Forms
 
         private async Task StartAlgorithm(IAlgorithm algorithm)
         {
-            EnableButtons(false);
-
             await algorithm.Start();
 
             var time = algorithm.LastActionTime;
 
             algorithm.ShowResult();
-
-            EnableButtons(true);
-        }
-
-        private void EnableButtons(bool enable)
-        {
-            ChessJumperProblemBtn.Enabled = enable;
         }
 
         // buttons click
@@ -90,6 +82,12 @@ namespace Algorithms2.Forms
         {
             _lastAlgorithm = AlgorithmType.Articulation;
             VisibleChessControls(true, AlgorithmType.Articulation);
+        }
+
+        private void TarjanBtn_Click(object sender, EventArgs e)
+        {
+            _lastAlgorithm = AlgorithmType.Tarjan;
+            VisibleChessControls(true, AlgorithmType.Tarjan);
         }
         #endregion
 
@@ -405,6 +403,122 @@ namespace Algorithms2.Forms
 
             ArticulationSourceFileTb.Text = "";
         }
+
+        private async void TarjanStartBtn_Click(object sender, EventArgs e)
+        {
+            var errorMessage = "\n1. Linia - lista wierzchołków oddzielona znakiem ';'\n" +
+                               "2. Linia - numer wierzchołka dla którego rozpoczynamy szukanie\n" +
+                               "3. Linia - lista par wierzchołków, dla których szukamy przodka, np. 1-2;3-4;4-5" +
+                               "Kolejne linie w pliku powinny zawierać dane:\nWierzhołek;Dziecko;Dziecko...";
+
+            var someException = false;
+
+            var model = new TarjanModel();
+            var tree = new TarjanTreeModel();
+            var targetPairs = new List<TarjanVertexPairTarget>();
+
+            var fileName = TarjanSourceFileTb.Text;
+
+            if (string.IsNullOrEmpty(fileName))
+            {
+                MessageBox.Show("Brak pliku z którego mam pobrać dane");
+                return;
+            }
+
+            try
+            {
+                var lines = File.ReadAllLines(fileName);
+
+                if (lines.Length < 3)
+                {
+                    throw new Exception("Plik ma nie wystarczającą liczbę linii.\n" + errorMessage);
+                }
+
+                // all vertices, first line
+                var verticesFromLines = lines[0].Split(';');
+                foreach (var vertexFromLine in verticesFromLines)
+                {
+                    var vertexName = Int32.Parse(vertexFromLine);
+
+                    tree.Vertices.Add(new TarjanNodeModel
+                    {
+                        Color = Color.White,
+                        Count = 1,
+                        Name = vertexName,
+                    });
+                }
+
+                // second line, root
+                tree.Root = tree.Vertices.Find(x => x.Name == Int32.Parse(lines[1]));
+
+                // third line, target vertex pairs
+                var pairsFromLines = lines[2].Split(';');
+                foreach (var pairs in pairsFromLines)
+                {
+                    var pairVertices = pairs.Split('-');
+                    var pairVertex1 = tree.Vertices.Find(v => v.Name == Int32.Parse(pairVertices[0]));
+                    var pairVertex2 = tree.Vertices.Find(v => v.Name == Int32.Parse(pairVertices[1]));
+
+                    targetPairs.Add(new TarjanVertexPairTarget
+                    {
+                        Vertex1 = pairVertex1,
+                        Vertex2 = pairVertex2
+                    });
+                }
+
+                // graph
+                for (int iLines = 3; iLines < lines.Length; iLines++)
+                {
+                    var vertices = lines[iLines].Split(';');
+
+                    var tarjanVertex = tree.Vertices.Where(x => x.Name == Int32.Parse(vertices[0])).FirstOrDefault();
+
+                    if (tarjanVertex == default(TarjanNodeModel))
+                    {
+                        throw new Exception("Nie istnieje taki vertex w podanych wierzchołkach");
+                    }
+                    else
+                    {
+                        for (int iVertex = 1; iVertex < vertices.Length; iVertex++)
+                        {
+                            var neighVertexName = Int32.Parse(vertices[iVertex]);
+
+                            var neighVertex = tree.Vertices.Where(x => x.Name == neighVertexName).FirstOrDefault();
+
+                            if (neighVertex == default(TarjanNodeModel))
+                            {
+                                throw new Exception("Nie istnieje taki vertex jako sąsiad w podanych wierzchołkach");
+                            }
+                            else
+                            {
+                                tarjanVertex.Children.Add(neighVertex);
+                            }
+
+                        }
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                var content = ex.Message;
+
+                content += errorMessage;
+
+                MessageBox.Show(content);
+
+                someException = true;
+            }
+
+            if (!someException)
+            {
+                model.Tree = tree;
+                model.Target = targetPairs;
+
+                await StartAlgorithm(new TarjanProblem(model));
+            }
+
+            TarjanSourceFileTb.Text = "";
+        }
         #endregion
 
         // show buttons
@@ -433,6 +547,9 @@ namespace Algorithms2.Forms
                 case AlgorithmType.Articulation:
                     VisibleArticulationButtons(visible);
                     break;
+                case AlgorithmType.Tarjan:
+                    VisibleTarjanButtons(visible);
+                    break;
                 case AlgorithmType.None:
                     VisibleAllButtons(visible);
                     break;
@@ -449,6 +566,7 @@ namespace Algorithms2.Forms
             VisibleKruskalButtons(visible);
             VisibleCNF2Buttons(visible);
             VisibleArticulationButtons(visible);
+            VisibleTarjanButtons(visible);
         }
 
         private void VisibleChessJumperButtons(bool visible)
@@ -500,6 +618,13 @@ namespace Algorithms2.Forms
             ArticulationSourceFileTb.Visible = visible;
             ArticulationStartBtn.Visible = visible;
         }
+
+        private void VisibleTarjanButtons(bool visible)
+        {
+            TarjanFindSourceFileBtn.Visible = visible;
+            TarjanSourceFileTb.Visible = visible;
+            TarjanStartBtn.Visible = visible;
+        }
         #endregion
 
         // other buttons
@@ -517,6 +642,11 @@ namespace Algorithms2.Forms
         private void ArticulationFindSourceFileBtn_Click(object sender, EventArgs e)
         {
             GetFileNamePath(ArticulationSourceFileTb, @"C:\Users\Karol\Desktop\Articulation.txt");
+        }
+
+        private void TarjanFindSourceFileBtn_Click(object sender, EventArgs e)
+        {
+            GetFileNamePath(TarjanSourceFileTb, @"C:\Users\Karol\Desktop\Tarjan.txt");
         }
 
         private void GetFileNamePath(TextBox setTextbox, string defaultFileName)

@@ -10,6 +10,7 @@
         HashFunction,
         Kruskal,
         CNF2,
-        Articulation
+        Articulation,
+        Tarjan
     }
 }
