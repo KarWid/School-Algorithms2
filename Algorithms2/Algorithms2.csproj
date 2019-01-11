@@ -52,6 +52,7 @@
     <Compile Include="Algorithms\ChessJumperProblem.cs" />
     <Compile Include="Algorithms\CNF2Problem.cs" />
     <Compile Include="Algorithms\HashFunction.cs" />
+    <Compile Include="Algorithms\KMPProblem.cs" />
     <Compile Include="Algorithms\KruskalProblem.cs" />
     <Compile Include="Algorithms\NQueenPermutationsProblem.cs" />
     <Compile Include="Algorithms\NQueenWithReturnsProblem.cs" />
@@ -75,6 +76,12 @@
     </Compile>
     <Compile Include="Forms\HashFunctionForm.Designer.cs">
       <DependentUpon>HashFunctionForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\KMPForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\KMPForm.Designer.cs">
+      <DependentUpon>KMPForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Helpers\ChessBoardHelper.cs" />
     <Compile Include="Forms\Main.cs">
@@ -103,6 +110,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\HashFunctionForm.resx">
       <DependentUpon>HashFunctionForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\KMPForm.resx">
+      <DependentUpon>KMPForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\Main.resx">
       <DependentUpon>Main.cs</DependentUpon>

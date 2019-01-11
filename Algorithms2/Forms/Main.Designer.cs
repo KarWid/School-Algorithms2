@@ -65,6 +65,8 @@
             this.TarjanFindSourceFileBtn = new System.Windows.Forms.Button();
             this.TarjanSourceFileTb = new System.Windows.Forms.TextBox();
             this.TarjanBtn = new System.Windows.Forms.Button();
+            this.KMPStartBtn = new System.Windows.Forms.Button();
+            this.KMPBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ChessJumperProblemBtn
@@ -400,11 +402,33 @@
             this.TarjanBtn.UseVisualStyleBackColor = true;
             this.TarjanBtn.Click += new System.EventHandler(this.TarjanBtn_Click);
             // 
+            // KMPStartBtn
+            // 
+            this.KMPStartBtn.Location = new System.Drawing.Point(718, 279);
+            this.KMPStartBtn.Name = "KMPStartBtn";
+            this.KMPStartBtn.Size = new System.Drawing.Size(152, 21);
+            this.KMPStartBtn.TabIndex = 41;
+            this.KMPStartBtn.Text = "Uruchom KMP";
+            this.KMPStartBtn.UseVisualStyleBackColor = true;
+            this.KMPStartBtn.Click += new System.EventHandler(this.KMPStartBtn_Click);
+            // 
+            // KMPBtn
+            // 
+            this.KMPBtn.Location = new System.Drawing.Point(538, 279);
+            this.KMPBtn.Name = "KMPBtn";
+            this.KMPBtn.Size = new System.Drawing.Size(165, 48);
+            this.KMPBtn.TabIndex = 38;
+            this.KMPBtn.Text = "Algorytm KMP";
+            this.KMPBtn.UseVisualStyleBackColor = true;
+            this.KMPBtn.Click += new System.EventHandler(this.KMPBtn_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1064, 456);
+            this.Controls.Add(this.KMPStartBtn);
+            this.Controls.Add(this.KMPBtn);
             this.Controls.Add(this.TarjanStartBtn);
             this.Controls.Add(this.TarjanFindSourceFileBtn);
             this.Controls.Add(this.TarjanSourceFileTb);
@@ -488,6 +512,8 @@
         private System.Windows.Forms.Button TarjanFindSourceFileBtn;
         private System.Windows.Forms.TextBox TarjanSourceFileTb;
         private System.Windows.Forms.Button TarjanBtn;
+        private System.Windows.Forms.Button KMPStartBtn;
+        private System.Windows.Forms.Button KMPBtn;
     }
 }
 

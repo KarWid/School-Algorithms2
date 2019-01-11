@@ -11,6 +11,7 @@
         Kruskal,
         CNF2,
         Articulation,
-        Tarjan
+        Tarjan,
+        KMP
     }
 }

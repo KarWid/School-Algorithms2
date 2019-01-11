@@ -89,6 +89,12 @@ namespace Algorithms2.Forms
             _lastAlgorithm = AlgorithmType.Tarjan;
             VisibleChessControls(true, AlgorithmType.Tarjan);
         }
+
+        private void KMPBtn_Click(object sender, EventArgs e)
+        {
+            _lastAlgorithm = AlgorithmType.KMP;
+            VisibleChessControls(true, AlgorithmType.KMP);
+        }
         #endregion
 
         // start algorithm
@@ -519,6 +525,11 @@ namespace Algorithms2.Forms
 
             TarjanSourceFileTb.Text = "";
         }
+
+        private async void KMPStartBtn_Click(object sender, EventArgs e)
+        {
+            await StartAlgorithm(new KMPProblem());
+        }
         #endregion
 
         // show buttons
@@ -550,6 +561,9 @@ namespace Algorithms2.Forms
                 case AlgorithmType.Tarjan:
                     VisibleTarjanButtons(visible);
                     break;
+                case AlgorithmType.KMP:
+                    VisibleKMPButtons(visible);
+                    break;
                 case AlgorithmType.None:
                     VisibleAllButtons(visible);
                     break;
@@ -567,6 +581,7 @@ namespace Algorithms2.Forms
             VisibleCNF2Buttons(visible);
             VisibleArticulationButtons(visible);
             VisibleTarjanButtons(visible);
+            VisibleKMPButtons(visible);
         }
 
         private void VisibleChessJumperButtons(bool visible)
@@ -624,6 +639,11 @@ namespace Algorithms2.Forms
             TarjanFindSourceFileBtn.Visible = visible;
             TarjanSourceFileTb.Visible = visible;
             TarjanStartBtn.Visible = visible;
+        }
+
+        private void VisibleKMPButtons(bool visible)
+        {
+            KMPStartBtn.Visible = visible;
         }
         #endregion
 
