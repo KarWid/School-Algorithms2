@@ -51,6 +51,7 @@
     <Compile Include="Algorithms\BaseClasses\UnionFindBase.cs" />
     <Compile Include="Algorithms\ChessJumperProblem.cs" />
     <Compile Include="Algorithms\CNF2Problem.cs" />
+    <Compile Include="Algorithms\FordFulkersonProblem.cs" />
     <Compile Include="Algorithms\HashFunction.cs" />
     <Compile Include="Algorithms\KMPProblem.cs" />
     <Compile Include="Algorithms\KruskalProblem.cs" />
@@ -92,6 +93,7 @@
     </Compile>
     <Compile Include="Interfaces\IAlgorithm.cs" />
     <Compile Include="Models\ArticulationResult.cs" />
+    <Compile Include="Models\CNF2Result.cs" />
     <Compile Include="Models\GraphEdge.cs" />
     <Compile Include="Models\StronglyCoherentComponent.cs" />
     <Compile Include="Models\Tarjan\TarjanModel.cs" />

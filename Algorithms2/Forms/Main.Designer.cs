@@ -67,6 +67,10 @@
             this.TarjanBtn = new System.Windows.Forms.Button();
             this.KMPStartBtn = new System.Windows.Forms.Button();
             this.KMPBtn = new System.Windows.Forms.Button();
+            this.FordFulkersonStartBtn = new System.Windows.Forms.Button();
+            this.FordFulkersonFindSourceFileBtn = new System.Windows.Forms.Button();
+            this.FordFulkersonSourceFileTb = new System.Windows.Forms.TextBox();
+            this.FordFulkersonBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // ChessJumperProblemBtn
@@ -422,11 +426,52 @@
             this.KMPBtn.UseVisualStyleBackColor = true;
             this.KMPBtn.Click += new System.EventHandler(this.KMPBtn_Click);
             // 
+            // FordFulkersonStartBtn
+            // 
+            this.FordFulkersonStartBtn.Location = new System.Drawing.Point(882, 207);
+            this.FordFulkersonStartBtn.Name = "FordFulkersonStartBtn";
+            this.FordFulkersonStartBtn.Size = new System.Drawing.Size(152, 21);
+            this.FordFulkersonStartBtn.TabIndex = 45;
+            this.FordFulkersonStartBtn.Text = "Uruchom Forda Fulkersona";
+            this.FordFulkersonStartBtn.UseVisualStyleBackColor = true;
+            this.FordFulkersonStartBtn.Click += new System.EventHandler(this.FordFulkersonStartBtn_Click);
+            // 
+            // FordFulkersonFindSourceFileBtn
+            // 
+            this.FordFulkersonFindSourceFileBtn.Location = new System.Drawing.Point(718, 207);
+            this.FordFulkersonFindSourceFileBtn.Name = "FordFulkersonFindSourceFileBtn";
+            this.FordFulkersonFindSourceFileBtn.Size = new System.Drawing.Size(143, 22);
+            this.FordFulkersonFindSourceFileBtn.TabIndex = 44;
+            this.FordFulkersonFindSourceFileBtn.Text = "Wybierz plik";
+            this.FordFulkersonFindSourceFileBtn.UseVisualStyleBackColor = true;
+            this.FordFulkersonFindSourceFileBtn.Click += new System.EventHandler(this.FordFulkersonFindSourceFileBtn_Click);
+            // 
+            // FordFulkersonSourceFileTb
+            // 
+            this.FordFulkersonSourceFileTb.Location = new System.Drawing.Point(718, 235);
+            this.FordFulkersonSourceFileTb.Name = "FordFulkersonSourceFileTb";
+            this.FordFulkersonSourceFileTb.Size = new System.Drawing.Size(143, 20);
+            this.FordFulkersonSourceFileTb.TabIndex = 43;
+            // 
+            // FordFulkersonBtn
+            // 
+            this.FordFulkersonBtn.Location = new System.Drawing.Point(538, 207);
+            this.FordFulkersonBtn.Name = "FordFulkersonBtn";
+            this.FordFulkersonBtn.Size = new System.Drawing.Size(165, 48);
+            this.FordFulkersonBtn.TabIndex = 42;
+            this.FordFulkersonBtn.Text = "Algorytm Ford-Fulkersona";
+            this.FordFulkersonBtn.UseVisualStyleBackColor = true;
+            this.FordFulkersonBtn.Click += new System.EventHandler(this.FordFulkersonBtn_Click);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1064, 456);
+            this.Controls.Add(this.FordFulkersonStartBtn);
+            this.Controls.Add(this.FordFulkersonFindSourceFileBtn);
+            this.Controls.Add(this.FordFulkersonSourceFileTb);
+            this.Controls.Add(this.FordFulkersonBtn);
             this.Controls.Add(this.KMPStartBtn);
             this.Controls.Add(this.KMPBtn);
             this.Controls.Add(this.TarjanStartBtn);
@@ -514,6 +559,10 @@
         private System.Windows.Forms.Button TarjanBtn;
         private System.Windows.Forms.Button KMPStartBtn;
         private System.Windows.Forms.Button KMPBtn;
+        private System.Windows.Forms.Button FordFulkersonStartBtn;
+        private System.Windows.Forms.Button FordFulkersonFindSourceFileBtn;
+        private System.Windows.Forms.TextBox FordFulkersonSourceFileTb;
+        private System.Windows.Forms.Button FordFulkersonBtn;
     }
 }
 

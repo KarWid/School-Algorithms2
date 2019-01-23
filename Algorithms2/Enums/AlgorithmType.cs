@@ -12,6 +12,7 @@
         CNF2,
         Articulation,
         Tarjan,
-        KMP
+        KMP,
+        FordFulkerson
     }
 }

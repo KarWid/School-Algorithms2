@@ -12,7 +12,7 @@ namespace Algorithms2.Algorithms
     // slajd 64
     public class CNF2Problem : IAlgorithm
     {
-        private List<StronglyCoherentComponent<int>> _result = new List<StronglyCoherentComponent<int>>();
+        private CNF2Result _result = new CNF2Result();
 
         protected Stopwatch _stopwatch = new Stopwatch();
         protected List<Vertex> _vertices = new List<Vertex>();
@@ -63,17 +63,19 @@ namespace Algorithms2.Algorithms
         {
             string messageResult = "1 wiersz - 1 silnie spójna składowa\n";
 
-            _result.ForEach(x =>
+            if (!_result.IsValidResult)
             {
-                for (int i=0; i < x.Vertices.Count; i++)
+                messageResult += "Nie znaleziono rozwiązania dla tego równania\n";
+                MessageBox.Show(messageResult);
+                return;
+            }
+
+            _result.StronglyCoherentComponents.ForEach(x =>
+            {
+                x.Vertices.ForEach(v =>
                 {
-                    messageResult += x.Vertices[i].Name + " ";
-                    if (i < x.Vertices.Count - 1)
-                    {
-                        messageResult += ": ";
-                    }
-                }
-                messageResult += "\n";
+                    messageResult += v.Name < 0 ? "" : $"Nazwa: {v.Name}, Wartość: {x.LogicValue}\n";
+                });
             });
 
             MessageBox.Show(messageResult);
@@ -92,9 +94,9 @@ namespace Algorithms2.Algorithms
             });
         }
 
-        protected List<StronglyCoherentComponent<int>> StronglyCoherentComponents()
+        protected CNF2Result StronglyCoherentComponents()
         {
-            var result = new List<StronglyCoherentComponent<int>>();
+            var result = new CNF2Result();
 
             // dfs
             DFS();
@@ -104,20 +106,26 @@ namespace Algorithms2.Algorithms
 
             // DSF na transponowanym grafie, ale główna pętla DFS analizuje wierzchołki w kolejności
             // wartości czasu przetworzenia, czyli ProcessingTime
-            _vertices.ForEach(v => v.Visited = false);
-            _vertices = _vertices.OrderByDescending(x => x.ProcessingTime).ToList();
+            result.StronglyCoherentComponents = CreateStronglyCoherentComponents(transposedGraph);
 
-            _vertices.ForEach(v =>
+            // sprawdzenie czy kazda silnie spojna skladowa jest ok, tzn czy nie ma w niej np a i ~a
+            for (int i=0; i < result.StronglyCoherentComponents.Count; i++)
             {
-                if (!v.Visited)
+                if (!result.StronglyCoherentComponents[i].IsValid())
                 {
-                    var localResult = new StronglyCoherentComponent<int>();
-
-                    DFSBasedOnProcessingTime(transposedGraph, v, localResult);
-
-                    result.Add(localResult);
+                    result.IsValidResult = false;
+                    return result;
                 }
-            });
+            }
+
+            // utworzenie sąsiadów dla silnie spójnych składowych
+            CreateNeighoursInCoherentComponents(result.StronglyCoherentComponents);
+
+            // ustawienie wartości dla silnie spójnych składowych (0,1)
+            var stronglyCoherentComponentsTransposed = result.StronglyCoherentComponents.OrderByDescending(x => x.ProcessingTime)
+                                                                                        .ToList();
+
+            SetLogicValuesInCoherentComponents(stronglyCoherentComponentsTransposed);
 
             return result;
         }
@@ -153,6 +161,11 @@ namespace Algorithms2.Algorithms
             vertex.EntryTime = vertex.LowTime = time++;
 
             var graphVertex = _graph.Where(node => node.Name == vertex.Name).FirstOrDefault();
+
+            if (graphVertex == null)
+            {
+                return time;
+            }
 
             graphVertex.Neighbours.ForEach(neighbour =>
             {
@@ -237,6 +250,12 @@ namespace Algorithms2.Algorithms
 
             var vertexGraph = graph.Where(x => x.Name == vertex.Name).FirstOrDefault();
 
+            if (vertexGraph == null)
+            {
+                result.Vertices.Add(vertex);
+                return;
+            }
+
             vertexGraph.Neighbours.ForEach(neighbour =>
             {
                 var neighVertex = _vertices.Where(x => x.Name == neighbour.Name).FirstOrDefault();
@@ -247,6 +266,112 @@ namespace Algorithms2.Algorithms
             });
 
             result.Vertices.Add(vertex);
+        }
+
+        protected List<StronglyCoherentComponent<int>> CreateStronglyCoherentComponents(List<TreeNodeModel<int, int>> transposedGraph)
+        {
+            var result = new List<StronglyCoherentComponent<int>>();
+
+            _vertices.ForEach(v => v.Visited = false);
+            _vertices = _vertices.OrderByDescending(x => x.ProcessingTime).ToList();
+
+            _vertices.ForEach(v =>
+            {
+                if (!v.Visited)
+                {
+                    var localResult = new StronglyCoherentComponent<int>();
+
+                    DFSBasedOnProcessingTime(transposedGraph, v, localResult);
+
+                    result.Add(localResult);
+                }
+            });
+
+            for (int i = 0; i < result.Count; i++)
+            {
+                result[i].ProcessingTime = i+1;
+            }
+
+            return result;
+        }
+
+        protected void CreateNeighoursInCoherentComponents(List<StronglyCoherentComponent<int>> stronglyCoherentComponents)
+        {
+            for (int i=0; i < stronglyCoherentComponents.Count; i++)
+            {
+                // biore silnie spójną składową
+                var stronglyCoherentComponent = stronglyCoherentComponents[i];
+
+                // dla kazdego wierzchołka w tej silnie spójnej składowej weź wszystkich sąsiadów i sprawdź w których składowych są
+                stronglyCoherentComponent.Vertices.ForEach(v =>
+                {
+                    var vertexWithNeighbours = _graph.FirstOrDefault(x => x.Name == v.Name);
+
+                    if (vertexWithNeighbours == null)
+                    {
+                        return;
+                    }
+
+                    var neighbours = vertexWithNeighbours.Neighbours;
+
+                    // sprawdz w których innych silnie spójnych składowych jest ten sąsiad
+                    neighbours.ForEach(n =>
+                    {
+                        for (int j = 0; j < stronglyCoherentComponents.Count; j++)
+                        {
+                            if (j != i)
+                            {
+                                // jeśli silnie spójna składowa zawiera tego sąsiada, to dodajemy tą silnie spójną składową
+                                // do sąsiadów przeglądanej silnie spójnej składowej
+                                if (!stronglyCoherentComponent.Neighbours.Contains(stronglyCoherentComponents[j])
+                                    && stronglyCoherentComponents[j].Vertices.Where(vertex => vertex.Name == n.Name).ToList().Count > 0)
+                                {
+                                    stronglyCoherentComponent.Neighbours.Add(stronglyCoherentComponents[j]);
+                                }
+                            }
+                        }
+                    });
+                });
+            }
+        }
+
+        protected void SetLogicValuesInCoherentComponents(List<StronglyCoherentComponent<int>> stronglyCoherentComponentsTransposed)
+        {
+            // szukam składowej która nie ma wartości
+            var stronglyCoherentComponent = stronglyCoherentComponentsTransposed.FirstOrDefault(x => x.LogicValue == -1);
+
+            if (stronglyCoherentComponent == null)
+            {
+                return;
+            }
+
+            stronglyCoherentComponent.LogicValue = 1;
+            var stronglyCoherentComponentIndex = stronglyCoherentComponentsTransposed.IndexOf(stronglyCoherentComponent);
+
+            for (int i=0; i < stronglyCoherentComponentsTransposed.Count; i++)
+            {
+                // wszedzie gdzie występują przeciwności wierzchołków tej silnie spójnej składowej
+                // te silnie spójne składowe mają wartość 0
+
+                if (i != stronglyCoherentComponentIndex && stronglyCoherentComponentsTransposed[i].LogicValue == -1)
+                {
+                    // dla wszystkich wierzchołków w stronglyCoherentComponent, szukam wierzchołków negacji
+                    // w i-tym stronglyCoherentComponentsTransposed
+                    for (int iVertex = 0; iVertex < stronglyCoherentComponent.Vertices.Count; iVertex++)
+                    {
+                        var oppositeName = stronglyCoherentComponent.Vertices[iVertex].Name * (-1);
+                        var oppositeElement = stronglyCoherentComponentsTransposed[i].Vertices.FirstOrDefault(x => x.Name == oppositeName);
+
+                        if (oppositeElement != null)
+                        {
+                            stronglyCoherentComponentsTransposed[i].LogicValue = 0;
+                            break;
+                        }
+                    }
+                }
+            }
+
+            SetLogicValuesInCoherentComponents(stronglyCoherentComponentsTransposed);
         }
     }
 }

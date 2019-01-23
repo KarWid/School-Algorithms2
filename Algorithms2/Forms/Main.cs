@@ -95,6 +95,12 @@ namespace Algorithms2.Forms
             _lastAlgorithm = AlgorithmType.KMP;
             VisibleChessControls(true, AlgorithmType.KMP);
         }
+
+        private void FordFulkersonBtn_Click(object sender, EventArgs e)
+        {
+            _lastAlgorithm = AlgorithmType.FordFulkerson;
+            VisibleChessControls(true, AlgorithmType.FordFulkerson);
+        }
         #endregion
 
         // start algorithm
@@ -293,14 +299,13 @@ namespace Algorithms2.Forms
                     Int32.TryParse(values[0], out nodeFrom);
                     Int32.TryParse(values[1], out nodeTo);
 
-                    nodeFrom *= -1;
-
                     if (values.Length > 2)
                     {
                         Int32.TryParse(values[2], out weight);
                     }
 
-                    var node = tree.Where(x => x.Name == nodeFrom).FirstOrDefault();
+                    var node = tree.Where(x => x.Name == nodeFrom * (-1)).FirstOrDefault();
+                    var node2 = tree.Where(x => x.Name == nodeTo * (-1)).FirstOrDefault();
 
                     var neighbour = new TreeNeighbourNode<int, int>
                     {
@@ -308,15 +313,32 @@ namespace Algorithms2.Forms
                         Weight = weight
                     };
 
+                    var neighbour2 = new TreeNeighbourNode<int, int>
+                    {
+                        Name = nodeFrom,
+                        Weight = weight
+                    };
+
                     if (node == null)
                     {
                         var neighbours = new List<TreeNeighbourNode<int, int>>();
                         neighbours.Add(neighbour);
-                        tree.Add(new TreeNodeModel<int, int>(nodeFrom, neighbours));
+                        tree.Add(new TreeNodeModel<int, int>(nodeFrom * (-1), neighbours));
                     }
                     else
                     {
                         node.Neighbours.Add(neighbour);
+                    }
+
+                    if (node2 == null)
+                    {
+                        var neighbours = new List<TreeNeighbourNode<int, int>>();
+                        neighbours.Add(neighbour2);
+                        tree.Add(new TreeNodeModel<int, int>(nodeTo * (-1), neighbours));
+                    }
+                    else
+                    {
+                        node2.Neighbours.Add(neighbour2);
                     }
                 }
             }
@@ -530,6 +552,78 @@ namespace Algorithms2.Forms
         {
             await StartAlgorithm(new KMPProblem());
         }
+
+        private async void FordFulkersonStartBtn_Click(object sender, EventArgs e)
+        {
+            var errorMessage = "Pierwsza linia - szukanie ścieżki:\n" +
+                               "Numer wierzołka skąd;Numer wierzchołka dokąd\n" +
+                               "Druga linia powinna zawierać liczbę wierzchołków\n" +
+                               "Kolejne linie powinny wyglądać następująco:\n" +
+                               "Numer wierzchołka skąd;Numer wierzchołka dokąd;Przepustowość\n";
+
+            var someException = false;
+
+            int[,] model = null;
+            var edges = new List<GraphEdge>();
+            int fromName = 0, toName = 0, verticesCount = 0;
+
+            var fileName = FordFulkersonSourceFileTb.Text;
+
+            if (string.IsNullOrEmpty(fileName))
+            {
+                MessageBox.Show("Brak pliku z którego mam pobrać dane");
+                return;
+            }
+
+            try
+            {
+                var lines = File.ReadAllLines(fileName);
+
+                // first line
+                var firstLine = lines[0].Split(';');
+                fromName = Int32.Parse(firstLine[0]);
+                toName = Int32.Parse(firstLine[1]);
+
+                // second line
+                verticesCount = Int32.Parse(lines[1]);
+
+                var linesList = lines.ToList();
+                linesList.RemoveAt(0);
+                linesList.RemoveAt(0);
+
+                model = new int[verticesCount, verticesCount];
+                int vFrom, vTo, weight;
+
+                // all vertices, first line
+                foreach (var line in linesList)
+                {
+                    var values = line.Split(';');
+
+                    vFrom = Int32.Parse(values[0]);
+                    vTo = Int32.Parse(values[1]);
+                    weight = Int32.Parse(values[2]);
+
+                    model[vFrom, vTo] = weight;
+                }
+            }
+            catch (Exception ex)
+            {
+                var content = ex.Message;
+
+                content += errorMessage;
+
+                MessageBox.Show(content);
+
+                someException = true;
+            }
+
+            if (!someException)
+            {
+                await StartAlgorithm(new FordFulkersonProblem(model, fromName, toName));
+            }
+
+            FordFulkersonSourceFileTb.Text = "";
+        }
         #endregion
 
         // show buttons
@@ -564,6 +658,9 @@ namespace Algorithms2.Forms
                 case AlgorithmType.KMP:
                     VisibleKMPButtons(visible);
                     break;
+                case AlgorithmType.FordFulkerson:
+                    VisibleFordFulkersonButtons(visible);
+                    break;
                 case AlgorithmType.None:
                     VisibleAllButtons(visible);
                     break;
@@ -582,6 +679,7 @@ namespace Algorithms2.Forms
             VisibleArticulationButtons(visible);
             VisibleTarjanButtons(visible);
             VisibleKMPButtons(visible);
+            VisibleFordFulkersonButtons(visible);
         }
 
         private void VisibleChessJumperButtons(bool visible)
@@ -645,6 +743,13 @@ namespace Algorithms2.Forms
         {
             KMPStartBtn.Visible = visible;
         }
+
+        private void VisibleFordFulkersonButtons(bool visible)
+        {
+            FordFulkersonFindSourceFileBtn.Visible = visible;
+            FordFulkersonSourceFileTb.Visible = visible;
+            FordFulkersonStartBtn.Visible = visible;
+        }
         #endregion
 
         // other buttons
@@ -667,6 +772,11 @@ namespace Algorithms2.Forms
         private void TarjanFindSourceFileBtn_Click(object sender, EventArgs e)
         {
             GetFileNamePath(TarjanSourceFileTb, @"C:\Users\Karol\Desktop\Tarjan.txt");
+        }
+
+        private void FordFulkersonFindSourceFileBtn_Click(object sender, EventArgs e)
+        {
+            GetFileNamePath(FordFulkersonSourceFileTb, @"C:\Users\Karol\Desktop\FordFulkerson.txt");
         }
 
         private void GetFileNamePath(TextBox setTextbox, string defaultFileName)
